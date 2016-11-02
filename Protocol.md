@@ -6,16 +6,15 @@ Outline
 
 [RNA Prep](#rna-prep)
 * [RNA Extraction](#extract-rna-from-2-control-and-2-heat-shock-individuals)
+* [Quantify](#quantify-all-rna-samples)
+* [Visualize](#visualize-rna-on-bioanalyzer)
+* [Library Prep](#kapa-stranded-mrna-seq-kit-##using-1/2-rxn-volumes##)
+	* [Anneal adapters](#anneal-rna-adapters)
+	
 
 
 
-####Using unmodified RNAeasy kit (Below are summary steps)
-###Quantify all RNA samples
-##Visualize RNA of BioAnalyzer
-##Begin KAPA Stranded mRNA-Seq Kit ##using 1/2 rxn volumes##
-###Additional reagents needed:
-###Custom Oligos needed:
-### Anneal Adapters
+### Anneal RNA Adapters
 ###mRNA Capture
 ####mRNA Elution, Fragmentation and Priming
 ###Safe Stopping Point
@@ -126,7 +125,7 @@ Refer to manual during procedure (steps below are for notes and comments)
 * Insert a sample tube into the sample chamber, close the lid, then press Read tube. When the reading is complete (~3 seconds), remove the sample tube.
 * Repeat step last step until all samples have been read
 
-##Visualize RNA of BioAnalyzer
+##Visualize RNA on BioAnalyzer
 
 See Becca Certner for latest Vollmer lab protocol
 
@@ -166,7 +165,7 @@ Annealing buffer stock (10X):
 |RNA_P1.2_SA|P*CCAGCTGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
 |RNA_P1.2_BS|P*CACATGTATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT 
 
-### Anneal Adapters
+### Anneal RNA Adapters
 Single-stranded oligos need to be annealed with their appropriate partner before ligation. 
  
 * To create Adapter P1, combine each oligo 1.1 with its complementary oligo 1.2 in a 1:1 ratio in working strength annealing buffer (final buffer concentration 1x) for a total annealed adapter concentration of 40uM (for example, if purchased oligos are resuspended to an initial concentration of 100uM, use 40ul oligo 1.1, 40ul oligo 1.2, 10ul 10x annealing buffer and 10ul nuclease-free water). Do the same for oligos 2.1 and 2.2 to create the common adapter P2. 
