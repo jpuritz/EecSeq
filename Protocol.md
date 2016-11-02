@@ -21,7 +21,7 @@ Outline
 * [DSN Normalization](#dsn-normalization)
 	* [Enrichment](#pcr-enrichment)
 * [Quant Libraries](#quant-libraries)
-* [Split libraries](#split-finished-cdna-library-for-each-sample-into-two-vials-(8-vials-total))
+* [Split libraries](#split-finished-cdna-library-for-each-sample-into-two-vials-8-vials-total)
 
 [Probe Synthesis](#probe-synthesis)
 * [Remove sequencing adapters](#remove-adapters-from-cdna)
