@@ -4,7 +4,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 [Foo](#foo)
 
-* [RNA Prep](##rna-prep)
+* [RNA Prep](#rna-prep)
 
 
 ###Extract RNA from 2 control and 2 heat shock individuals
