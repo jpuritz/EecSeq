@@ -428,6 +428,7 @@ Resuspended beads with captured mRNA may be stored at 4 oC for up to 24 hours. D
 * Remove the plate/tube from the magnet.
 * Thoroughly resuspend the beads in 25 μl of 10 mM Tris-HCl (pH 8.0).
 * Incubate the plate/tube at room temperature for 2 min to allow the DNA to elute off the beads
+
 ---
 
 ###Safe Stopping Point
