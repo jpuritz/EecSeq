@@ -2,6 +2,88 @@
 
 The Expressed Exome Capture Sequencing protocol is designed to create exome capture probes directly from RNA.  The probes are then used from hybrid capture of exome DNA sequences, allowing for genotyping of alleles at expressed genes.
 
+[Foo](#foo)
+
+* [RNA Prep](##rna-prep)
+
+
+###Extract RNA from 2 control and 2 heat shock individuals
+####Using unmodified RNAeasy kit (Below are summary steps)
+###Quantify all RNA samples
+##Visualize RNA of BioAnalyzer
+##Begin KAPA Stranded mRNA-Seq Kit ##using 1/2 rxn volumes##
+###Additional reagents needed:
+###Custom Oligos needed:
+### Anneal Adapters
+###mRNA Capture
+####mRNA Elution, Fragmentation and Priming
+###Safe Stopping Point
+###1st Strand Synthesis
+###2nd Strand Synthesis and Marking
+###2nd Strand Synthesis and Marking Cleanup
+###SAFE STOPPING POINT
+###A-Tailing
+###A-Tailing immediately
+###A-Tailing after safe stopping point
+###Adapter Ligation
+####Adapter concentration will vary depending on overall RNA yield, see table below:
+####This will be where we insert the custom adapters that are barcoded with RE sites
+###Post-Ligation Cleanup
+###Safe Stopping Point
+###2nd Post-Ligation Cleanup
+###SAFE STOPPING POINT
+###Library Amplificiation
+##NEEDS TO BE TESTED
+###Library Amplification Cleanup
+## Quant libraries
+###Safe Stopping Point
+### DSN Normalization
+#### DSN needs to be properly dilued and should be tested for activity levels before proceeding
+#####This protocol was taken from Illumina's recommendations
+###Safe Stopping Point
+###SPRI Cleanup
+###PCR Enrichment
+####Illumina recommends 12 cycles.  This could be increased.
+####Alternatively, we could split vials into libraries and probes here
+###SPRI Cleanup
+## Quant libraries
+##Split finished cDNA library for each sample into two vials (8 vials total)
+###Safe Stopping Point
+##Probe Synthesis
+###Remove adapters from cDNA
+####Materials needed
+###Remove 5' and 3' overhangs
+###Safe Stopping Point
+##Biotin Labeling
+###Materials needed
+###Procedure
+####Optional:Control reaction
+###Safe Stopping Point
+##Preparation of whole genome libraries using KAPA HyperPlus Kit
+#### This assumes that genomic DNA is already extracted and sheared.
+### Anneal Adapters
+### End repair
+### Adapter ligation
+### Post-ligation Cleanup
+### Quant samples
+###Library Amplification
+### Post-amplification Cleanup
+###Safe Stopping Point
+## Hybridization and Capture
+####Materials needed
+###Hybridization
+### Preparation of Dynabeads
+### Washes
+### Library re-amplification
+### Quant samples
+### Verify
+
+
+
+
+
+
+
 ##RNA Prep
 
 ###Extract RNA from 2 control and 2 heat shock individuals
