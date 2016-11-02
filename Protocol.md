@@ -602,6 +602,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * Repeat steps 6 and 7 for each reaction mix tube.
 * Incubate the reaction mix tubes on the thermal cycler at 68°C for 25 minutes.
 * Add 40 μl of 2X DSN stop solution to each reaction mix tube. Gently pipette the entire volume up and down to mix thoroughly, then place the tubes on ice.
+
 ---
 
 ###Safe Stopping Point
