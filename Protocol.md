@@ -15,31 +15,33 @@ Outline
 	* [1st Strand Synthesis](#1st-strand-synthesis)
 	* [2nd Strang Synthesis](#2nd-strand-synthesis-and-marking)
 	* [A-tailing](#a-tailing)
+	* [Adapter Ligation](#adapter-ligation)
+	* [Library Enrichment](#library-amplificiation)
+* [Quant](#-quant-libraries)
+* [DSN Normalization](#dsn-normalization)
+	* [Enrichment](#pcr-enrichment)
+* [Quant Libraries](#quant-libraries)
+* [Split libraries](#split-finished-cdna-library-for-each-sample-into-two-vials-(8-vials-total))
 
-###adapter-ligation
-###library-amplificiation
-##-quant-libraries
-###-dsn-normalization
-###pcr-enrichment
-##-quant-libraries
-##split-finished-cdna-library-for-each-sample-into-two-vials-(8-vials-total)
-##probe-synthesis
-###remove-adapters-from-cdna
-###remove-5'-and-3'-overhangs
-##biotin-labeling
-##preparation-of-whole-genome-libraries-using-kapa-hyperplus-kit
-###-anneal-adapters
-###-end-repair
-###-adapter-ligation
-###-quant-samples
-###library-amplification
-##-hybridization-and-capture
-###hybridization
-###-preparation-of-dynabeads
-###-washes
-###-library-re-amplification
-###-quant-samples
-###-verify
+[Probe Synthesis](#probe-synthesis)
+* [Remove sequencing adapters](#remove-adapters-from-cdna)
+* [Remove 5' and 3' overhangs](#remove-5'-and-3'-overhangs)
+* [Biotin Labeling](#biotin-labeling)
+
+[Genomic Library Prep](#preparation-of-whole-genome-libraries-using-kapa-hyperplus-kit)
+* [Anneal Adapters](#anneal-adapters)
+* [End Repair](#end-repair)
+* [Adapter ligation](#adapter-ligation)
+* [Quantification](#quant-samples)
+* [Amplification](#library-amplification)
+
+[Hybridization and Capture](#hybridization-and-capture)
+* [Hybridization](#hybridization)
+	* [Preparation of DynaBeads](#preparation-of-dynabeads)
+	* [Washes](#washes)
+* [Library Re-amplification](#library-re-amplification)
+* [Quant Final Libraries](#quant-samples)
+* [Verify](#verify)
 
 
 
@@ -285,7 +287,7 @@ Resuspended beads with captured mRNA may be stored at 4 oC for up to 24 hours. D
 
 * Place the plate/tube on ice and proceed immediately to **2nd Strand Synthesis and Marking**.
 
-###2nd Strand Synthesis and Marking
+###2nd Strand Synthesis
 * Assemble the 2nd Strand Synthesis and Marking reaction as follows:
 
 |Component|Volume|
@@ -304,7 +306,7 @@ Resuspended beads with captured mRNA may be stored at 4 oC for up to 24 hours. D
 
 * Place the plate/tube on ice and proceed immediately to **2nd Strand Synthesis and Marking Cleanup**.
 
-###2nd Strand Synthesis and Marking Cleanup
+###Cleanup
 
 * Perform a 1.8X SPRI® cleanup by combining the following:
 
@@ -335,7 +337,7 @@ Resuspended beads with captured mRNA may be stored at 4 oC for up to 24 hours. D
 ---
 
 ###A-Tailing
-* A-Tailing is performed either directly after the 2nd Strand Synthesis and Marking Cleanup, or after the Safe Stopping Point, where beads were resuspended in 1X A-Tailing Buffer and stored at 4 °C for up to 24 hours. Depending on your chosen work ow, proceed with either **A-Tailing immediately** or **Section 7B: A-Tailing after Safe Stopping Point**.
+* A-Tailing is performed either directly after the 2nd Strand Synthesis and Marking Cleanup, or after the Safe Stopping Point, where beads were resuspended in 1X A-Tailing Buffer and stored at 4 °C for up to 24 hours. 
 
 ###A-Tailing immediately
 * Assemble the A-Tailing reaction as follows:
