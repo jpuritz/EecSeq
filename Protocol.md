@@ -329,6 +329,7 @@ Resuspended beads with captured mRNA may be stored at 4 oC for up to 24 hours. D
 * Dry the beads at room temperature, until all of the ethanol has evaporated. 
   * **Caution: over-drying the beads may result in dramatic yield loss.**
 * Proceed immediately to **A-Tailing** immediately, or follow the Safe Stopping Point instructions below.
+
 ---
 
 ###SAFE STOPPING POINT
