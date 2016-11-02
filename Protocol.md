@@ -1226,7 +1226,7 @@ Remember to perform one capture per pool of the libraries amplified with the sam
 	
 * Place on the magnet
 * Remove supernatant and retain in case of DNA loss.
-* Replace with 30 μl of H20 
+* Replace with 30 μl of 80°C H20 
 * Mix well, incubate for for 10 min, 80°C.
 * Place on magnet
 * Remove and **SAVE** supernatant (this contains the hybridization-enriched products)
