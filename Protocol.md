@@ -113,6 +113,7 @@ Equipment
 Bioanalyzer Instructions
 
 Prepping the Gel (use filtered gel within 4 weeks)
+
 1. Pipette 550uL gel matrix (red) into a spin filter
 2. Centrifuge at 1500g for 10 mins at room temp
 3. Aliquot 65uL filtered gel into 0.5mL RNase-free tubes
