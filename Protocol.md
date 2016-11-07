@@ -54,7 +54,18 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 ###Extract RNA from 2 control and 2 heat shock individuals
 *Refer to manual during procedure (steps below are for notes and comments)*
 ####Using unmodified RNAeasy kit (Below are summary steps)
+
+Reagents and supplies
+* RNAeasy kit (Qiagen #) purification of total RNA from small amounts of starting material
+* Molecular grade EtOH
+* (Others?)
+
+Equipment
+* Tissue homogenizer with replacable probes (Jon can you add specs of ours here)
+* Micro centrifuge > 8,000 rpm
+
 Notes before starting
+* Extract RNA in the UV-hood. Place all reagents, pipettes, tips, and supplies inside the hood and expose to UV for 30 minutes. (Do not put your samples in the UV hood!)
 * If purifying RNA from cell lines rich in RNases, or tissue, add either 10 μl β-mercaptoethanol (β-ME), or 20 μl 2 M dithiothreitol (DTT)*, to 1 ml Buffer RLT. Buffer RLT with β-ME or DTT can be stored at room temperature for up to 1 month.
 * Add 4 volumes of ethanol (96–100%) to Buffer RPE for a working solution.
 * Remove RNAlater®-stabilized tissue from the reagent using forceps.
@@ -72,6 +83,13 @@ Procedure
 ###Quantify all RNA samples
 Results will be used for calibration points during library generation
 Refer to manual during procedure (steps below are for notes and comments)
+
+Reagents and supplies
+* Qubit® RNA HS Assay Kit (ThermoFisher Q32852)
+* Microcentrifuge tubes for florescence (Cat # XXXX)
+
+Equipment
+* Qubit® 3.0 Flourometer
 
 **Procedure (Standard HS RNA protocol)**
 * Set up the required number of 0.5-mL tubes for standards and samples. The Qubit® RNA HS Assay requires 2 standards.
