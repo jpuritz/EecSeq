@@ -169,6 +169,20 @@ CLEAN THE ELECTRODES AGAIN AFTER EVERY RUN
 This should take 8-10 hours
 Refer to manual during procedure (steps below are for notes and comments)
 
+###Reagents 
+
+KAPA Stranded mRNA-Seq Kit (KAPA #XXXXXX). This kit includes all the enzymes and buffers required for cDNA library preparation from  isolation of poly(A)-tailed RNA. Kits include reagents for RNA fragmentation, 1st strand cDNA synthesis and 2nd strand synthesis/marking, and cDNA library preparation, including A-tailing, ligation and library amplification. 
+
+Steps in Library construction (Here I just want to be explicit where we use their reagents and where we use our reagents):
+
+* mRNA capture using magnetic oligo-dT beads
+* Fragmentation using heat and magnesium
+* 1st Strand cDNA Synthesis using random priming
+* 2nd Strand cDNA Synthesis and marking, which converts the cDNA:RNA hybrid to double-stranded cDNA (dscDNA) and incorporates dUTP in the second cDNA strand
+* A-tailing to add dAMP to the 3′-ends of the dscDNA library fragments
+* Adapter ligation, where dsDNA adapters with 3′-dTMP overhangs are ligated to A-tailed library insert fragments (HERE WE USE CUSTOM ADAPTERS, SEE BELOW)
+* Library amplification to amplify library fragments carrying appropriate adapter sequences at both ends using high-fidelity, low-bias PCR; the strand marked with dUTP is not amplified.
+
 ###Additional reagents needed:
 
 Annealing buffer stock (10X):
@@ -178,9 +192,13 @@ Annealing buffer stock (10X):
 | Tris HCl, pH 8| 100 mM|
 | NaCl|500 mM|
 | EDTA| 10 mM|
-  
 
-###Custom Oligos needed:
+###Equipment 
+
+
+###Custom Oligos needed to make adapters:
+
+Jon can you add a figure here on the adapters... Illumina calls P1 P5 and P2 P7... just to avoid confusion for the eventual user of this protocol.
 
 |Oligo Name| Sequence|
 |----------|---------|
