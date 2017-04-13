@@ -80,7 +80,7 @@ Procedure
 * Place the RNeasy spin column in a new 1.5 ml collection tube (supplied). Add 30–50 μl RNase-free water directly to the spin column membrane. Close the lid, and centrifuge for 1 min at ≥8000 x g to elute the RNA.
 * If the expected RNA yield is >30 μg, repeat step 7 using another 30–50 μl of RNase-free water, or using the eluate from step 7 (if high RNA concentration is required). Reuse the collection tube from step 7.
 
-###Quantify all RNA samples
+### Quantify all RNA samples
 Results will be used for calibration points during library generation
 Refer to manual during procedure (steps below are for notes and comments)
 
@@ -108,7 +108,7 @@ Equipment
 * Insert a sample tube into the sample chamber, close the lid, then press Read tube. When the reading is complete (~3 seconds), remove the sample tube.
 * Repeat step last step until all samples have been read
 
-##Visualize RNA on BioAnalyzer
+## Visualize RNA on BioAnalyzer
 
 Bioanalyzer Instructions
 
@@ -165,11 +165,11 @@ well)
 
 CLEAN THE ELECTRODES AGAIN AFTER EVERY RUN
 
-##Begin KAPA Stranded mRNA-Seq Kit using 1/2 rxn volumes##
+## Begin KAPA Stranded mRNA-Seq Kit using 1/2 rxn volumes##
 This should take 8-10 hours
 Refer to manual during procedure (steps below are for notes and comments)
 
-###Reagents 
+### Reagents 
 
 KAPA Stranded mRNA-Seq Kit (KAPA #XXXXXX). This kit includes all the enzymes and buffers required for cDNA library preparation from  isolation of poly(A)-tailed RNA. Kits include reagents for RNA fragmentation, 1st strand cDNA synthesis and 2nd strand synthesis/marking, and cDNA library preparation, including A-tailing, ligation and library amplification. 
 
@@ -183,7 +183,7 @@ Steps in Library construction (Here I just want to be explicit where we use thei
 * Adapter ligation, where dsDNA adapters with 3′-dTMP overhangs are ligated to A-tailed library insert fragments (HERE WE USE CUSTOM ADAPTERS, SEE BELOW)
 * Library amplification to amplify library fragments carrying appropriate adapter sequences at both ends using high-fidelity, low-bias PCR; the strand marked with dUTP is not amplified.
 
-###Additional reagents needed:
+### Additional reagents needed:
 
 Annealing buffer stock (10X):
 
