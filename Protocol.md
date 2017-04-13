@@ -49,11 +49,11 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 
 
-##RNA Prep
+## RNA Prep
 
-###Extract RNA from 2 control and 2 heat shock individuals
+### Extract RNA from 2 control and 2 heat shock individuals
 *Refer to manual during procedure (steps below are for notes and comments)*
-####Using unmodified RNAeasy kit (Below are summary steps)
+#### Using unmodified RNAeasy kit (Below are summary steps)
 
 Reagents and supplies
 * RNAeasy kit (Qiagen #) purification of total RNA from small amounts of starting material
