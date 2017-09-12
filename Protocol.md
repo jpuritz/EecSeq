@@ -314,7 +314,19 @@ For Puritz and Lotterhos 2017, we used 4000 ng starting RNA, but because of diff
 |Balance of water (if required)|5 μl|
 |**Total Reaction Volume**| **30 μl**|
 
-###mRNA Capture
+### mRNA Capture
+
+* Before mRNA capture beads can be used they must be washed with mRNA Bead Binding Buffer
+	* Resuspend beads thoroughly by gentle pipetting or vortexing
+	* For each library to be prepared, transfer 26.25 uL of the resuspended mRNA Capture beads into an appropriate tube
+		* Up to 48 libraries (1,260 uL) can be washed in a single tube
+	* Place the tube on a magnet holder and incubate at room temperature until solution is clear.
+	* Discard supernatant and replace with an equal volume of mRNA Bead Binding Buffer.
+	* Remove tube from magent and again resuspend the beads.
+	* Place the tube on a magnet holder and incubate at room temperature until solution is clear.
+	* Discard supernatant and replace with an equal volume of mRNA Bead Binding Buffer.
+	* Remove tube from magent and again resuspend the beads.
+
 * Combine the following for each RNA sample to be captured:
 
 |Component|Volume|
@@ -348,7 +360,7 @@ For Puritz and Lotterhos 2017, we used 4000 ng starting RNA, but because of diff
 * Place the plate/tube on the magnet and incubate at room temperature until the solution is clear. Remove and discard the supernatant.
 * Remove the beads from the magnet and resuspend in 100 μl of KAPA mRNA Bead Wash Buffer by pipetting up and down several times.
 * Place the plate/tube on the magnet and incubate at room temperature until the solution is clear. Remove and discard the entire volume of supernatant.
-####mRNA Elution, Fragmentation and Priming
+#### mRNA Elution, Fragmentation and Priming
 * Prepare the required volume of 1X Fragment, Prime and Elute Buffer as follows:
 
 |Component|Volume per sample|
@@ -357,7 +369,7 @@ For Puritz and Lotterhos 2017, we used 4000 ng starting RNA, but because of diff
 |Fragment, Prime and Elute Buffer (2X)| 5.5 μl|
 |**Total Volume**| **11 μl**|
 
-* Thoroughly resuspend the KAPA mRNA Capture Beads with captured mRNA prepared in Step 2.13 above in 11 μl of 1X Fragment, Prime and Elute Buffer.
+* Thoroughly resuspend the KAPA mRNA Capture Beads with captured mRNA in 11 μl of 1X Fragment, Prime and Elute Buffer.
 
 ---
 ###Safe Stopping Point
