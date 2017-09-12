@@ -55,22 +55,22 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 *Refer to manual during procedure (steps below are for notes and comments)*
 #### Using unmodified TRI Reagent Protocol [LINK](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/9738M_D.pdf)(Below are summary steps)
 
-Reagents and supplies
+**Reagents and supplies**
 * Nuclease-free Water
 * 1-bromo-3-chloropropane (BCP; recommended, e.g., MRC, Cat #BP 151), or chloroform without added isoamyl alcohol 100% 
 * isopropanol, ACS grade or better
 * 100% ethanol, ACS grade or better
 
-Equipment
+**Equipment**
 * Tissue homogenizer with replacable probes (such as Qiagen TissueRuptor®)
 * Appropriately sized RNase-free centrifuge tubes with secure closures, compatible with phenol/chloroform (polypropyl- ene, or polyallomer), and capable of withstanding centrifugal forces of 12,000G
 * Centrifuge capable of 12,000 x g
 
-Notes before starting
+**Notes before starting**
 * Place all pipettes, tips, and supplies inside the hood and expose to UV for 30 minutes. (Do not put your samples in the UV hood!)
 * Prepare 75% ethanol by mixing 250 μL nuclease-free water with 750 μL 100% ethanol per mL of TRI Reagent solution to be used. Include 10% overage to ensure a sufficient volume.
 
-Procedure
+**Procedure**
 * Homogenize tissue samples in 10–20 volumes TRI Reagent solution. Homogenize cultured cells in 1 mL TRI Reagent solution per 5–10 x 106 cells, or per 10 cm2 culture dish area.
 * Incubate the homogenate for 5 min at room temp.
 * (Optional) Centrifuge at 12,000 xg for 10 min at 4°C and transfer the supernatant to a fresh tube.
@@ -193,16 +193,17 @@ Refer to manual during procedure (steps below are for notes and comments)
 
 ### Reagents 
 
-KAPA Stranded mRNA-Seq Kit (KAPA #XXXXXX). This kit includes all the enzymes and buffers required for cDNA library preparation from  isolation of poly(A)-tailed RNA. Kits include reagents for RNA fragmentation, 1st strand cDNA synthesis and 2nd strand synthesis/marking, and cDNA library preparation, including A-tailing, ligation and library amplification. 
+KAPA Stranded mRNA-Seq Kit (KAPA #KK8420). This kit includes all the enzymes and buffers required for cDNA library preparation from  isolation of poly(A)-tailed RNA. Kits include reagents for RNA fragmentation, 1st strand cDNA synthesis and 2nd strand synthesis/marking, and cDNA library preparation, including A-tailing, ligation and library amplification. 
 
-Steps in Library construction (Here I just want to be explicit where we use their reagents and where we use our reagents):
+Steps in Library construction:
 
 * mRNA capture using magnetic oligo-dT beads
 * Fragmentation using heat and magnesium
 * 1st Strand cDNA Synthesis using random priming
 * 2nd Strand cDNA Synthesis and marking, which converts the cDNA:RNA hybrid to double-stranded cDNA (dscDNA) and incorporates dUTP in the second cDNA strand
 * A-tailing to add dAMP to the 3′-ends of the dscDNA library fragments
-* Adapter ligation, where dsDNA adapters with 3′-dTMP overhangs are ligated to A-tailed library insert fragments (HERE WE USE CUSTOM ADAPTERS, SEE BELOW)
+* Adapter ligation, where dsDNA adapters with 3′-dTMP overhangs are ligated to A-tailed library insert fragments
+	* **NOTE** Here, we insert custom adapters.  See below.
 * Library amplification to amplify library fragments carrying appropriate adapter sequences at both ends using high-fidelity, low-bias PCR; the strand marked with dUTP is not amplified.
 
 ### Additional reagents needed:
@@ -215,8 +216,12 @@ Annealing buffer stock (10X):
 | NaCl|500 mM|
 | EDTA| 10 mM|
 
+10 mM Tris-HCL (pH 8.0 - 8.5)
 ###Equipment 
 
+* Magnetic stand and compatible tubes or striptubes 
+* Thermocycler
+* SPRI purification beads (KAPA Pure Beads or AmpureXP)
 
 ###Custom Oligos needed to make adapters:
 
@@ -224,22 +229,12 @@ Jon can you add a figure here on the adapters... Illumina calls P1 P5 and P2 P7.
 
 |Oligo Name| Sequence|
 |----------|---------|
-|RNA_P2.1_H3|P*CAAGCTTAGATCGGAAGAGCGAGAACAA
-|RNA_P2.1_NC|P*CCCATGGAGATCGGAAGAGCGAGAACAA
-|RNA_P2.1_SA|P*CGTCGACAGATCGGAAGAGCGAGAACAA
-|RNA_P2.1_BS|P*CTGTACAAGATCGGAAGAGCGAGAACAA
-|RNA_P2.2_H3|GTGACTGGAGTTCACACGTGTGCTCTTCCGATCTTTCGAAG*T
-|RNA_P2.2_NC|GTGACTGGAGTTCACACGTGTGCTCTTCCGATCTGGTACCG*T
-|RNA_P2.2_SA|GTGACTGGAGTTCACACGTGTGCTCTTCCGATCTCAGCTGG*T
-|RNA_P2.2_BS|GTGACTGGAGTTCACACGTGTGCTCTTCCGATCTACATGTG*T
-|RNA_P1.1_H3|ACACTCTTTCCCTACACGACGCTCTTCCGATCTAAGCTTG*T
-|RNA_P1.1_NC|ACACTCTTTCCCTACACGACGCTCTTCCGATCTCCATGGG*T
-|RNA_P1.1_SA|ACACTCTTTCCCTACACGACGCTCTTCCGATCTGTCGACG*T
-|RNA_P1.1_BS|ACACTCTTTCCCTACACGACGCTCTTCCGATCTTGTACAG*T
-|RNA_P1.2_H3|P*CTTCGAAATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
-|RNA_P1.2_NC|P*CGGTACCATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
-|RNA_P1.2_SA|P*CCAGCTGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
-|RNA_P1.2_BS|P*CACATGTATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT 
+|Universal_SAI1_Adapter|AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCGTCGACT*T|
+|Indexed_Adapter_SAI1_I5|P*AGTCGACGATCGGAAGAGCACACGTCTGAACTCCAGTCACACAGTGATCTCGTATGCCGTCTTCTGCTTG|
+|Indexed_Adapter_SAI1_I8|P*AGTCGACGATCGGAAGAGCACACGTCTGAACTCCAGTCACACTTGAATCTCGTATGCCGTCTTCTGCTTG|
+|Indexed_Adapter_SAI1_I9|P*AGTCGACGATCGGAAGAGCACACGTCTGAACTCCAGTCACGATCAGATCTCGTATGCCGTCTTCTGCTTG|
+|Indexed_Adapter_SAI1_I11|P*AGTCGACGATCGGAAGAGCACACGTCTGAACTCCAGTCACGGCTACATCTCGTATGCCGTCTTCTGCTTG|
+
 
 ### Anneal RNA Adapters
 Single-stranded oligos need to be annealed with their appropriate partner before ligation. 
