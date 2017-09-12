@@ -51,35 +51,57 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 ## RNA Prep
 
-### Extract RNA from 2 control and 2 heat shock individuals
+### Extract RNA from individuals to be used for probes
 *Refer to manual during procedure (steps below are for notes and comments)*
-#### Using unmodified RNAeasy kit (Below are summary steps)
+#### Using unmodified TRI Reagent Protocol [LINK](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/9738M_D.pdf)(Below are summary steps)
 
 Reagents and supplies
-* RNAeasy kit (Qiagen #) purification of total RNA from small amounts of starting material
-* Molecular grade EtOH
-* (Others?)
+* Nuclease-free Water
+* 1-bromo-3-chloropropane (BCP; recommended, e.g., MRC, Cat #BP 151), or chloroform without added isoamyl alcohol 100% 
+* isopropanol, ACS grade or better
+* 100% ethanol, ACS grade or better
 
 Equipment
-* Tissue homogenizer with replacable probes (Jon can you add specs of ours here)
-* Micro centrifuge > 8,000 rpm
+* Tissue homogenizer with replacable probes (such as Qiagen TissueRuptor®)
+* Appropriately sized RNase-free centrifuge tubes with secure closures, compatible with phenol/chloroform (polypropyl- ene, or polyallomer), and capable of withstanding centrifugal forces of 12,000G
+* Centrifuge capable of 12,000 x g
 
 Notes before starting
-* Extract RNA in the UV-hood. Place all reagents, pipettes, tips, and supplies inside the hood and expose to UV for 30 minutes. (Do not put your samples in the UV hood!)
-* If purifying RNA from cell lines rich in RNases, or tissue, add either 10 μl β-mercaptoethanol (β-ME), or 20 μl 2 M dithiothreitol (DTT)*, to 1 ml Buffer RLT. Buffer RLT with β-ME or DTT can be stored at room temperature for up to 1 month.
-* Add 4 volumes of ethanol (96–100%) to Buffer RPE for a working solution.
-* Remove RNAlater®-stabilized tissue from the reagent using forceps.
-Procedure
-* Do not use more than 30 mg tissue. Disrupt the tissue and homogenize the lysate in the appropriate volume of Buffer RLT (350 μl for less than 20 mg; 650 μl for less than 30 mg). Centrifuge the lysate for 3 min at maximum speed. Carefully remove the supernatant by pipetting, and use it in step 2.
-* Add 1 volume of 70% ethanol to the lysate, and mix well by pipetting. Do not centrifuge. Proceed immediately to step 3.
-* Transfer up to 700 μl of the sample, including any precipitate, to an RNeasy Mini spin column placed in a 2 ml collection tube (supplied). Close the lid, and centrifuge for 15 s at ≥8000 x g. Discard the flow-through.
-* Add 700 μl Buffer RW1 to the RNeasy spin column. Close the lid, and centrifuge for 15 s at ≥8000 x g. Discard the flow-through.
-* Add 500 μl Buffer RPE to the RNeasy spin column. Close the lid, and centrifuge for 15 s at ≥8000 x g. Discard the flow-through.
-* Add 500 μl Buffer RPE to the RNeasy spin column. Close the lid, and centrifuge for 2 min at ≥8000 x g.
-* **Optional:** Place the RNeasy spin column in a new 2 ml collection tube (supplied). Centrifuge at full speed for 1 min to dry the membrane.
-* Place the RNeasy spin column in a new 1.5 ml collection tube (supplied). Add 30–50 μl RNase-free water directly to the spin column membrane. Close the lid, and centrifuge for 1 min at ≥8000 x g to elute the RNA.
-* If the expected RNA yield is >30 μg, repeat step 7 using another 30–50 μl of RNase-free water, or using the eluate from step 7 (if high RNA concentration is required). Reuse the collection tube from step 7.
+* Place all pipettes, tips, and supplies inside the hood and expose to UV for 30 minutes. (Do not put your samples in the UV hood!)
+* Prepare 75% ethanol by mixing 250 μL nuclease-free water with 750 μL 100% ethanol per mL of TRI Reagent solution to be used. Include 10% overage to ensure a sufficient volume.
 
+Procedure
+* Homogenize tissue samples in 10–20 volumes TRI Reagent solution. Homogenize cultured cells in 1 mL TRI Reagent solution per 5–10 x 106 cells, or per 10 cm2 culture dish area.
+* Incubate the homogenate for 5 min at room temp.
+* (Optional) Centrifuge at 12,000 xg for 10 min at 4°C and transfer the supernatant to a fresh tube.
+* Add 100 μL BCP per 1 mL of TRI Reagent solution, mix well, and incubate at room temp for 5–15 min.
+	* Add 100 μL BCP per 1 mL of TRI Reagent solution used for homogenization. Alternatively, 200 μL of chloroform (without isoamyl alcohol) can be used in place of BCP.
+	* Cap the tubes tightly and shake vigorously for 15 sec.
+	* Incubate the mixture at room temperature for 5–15 min.
+* Centrifuge at 12,000 x g for 10–15 min at 4°C, then transfer the aqueous phase to a fresh tube.
+	* Centrifuge at 12,000 x g for 10–15 min at 4°C. Centrifugation at temperatures > 8°C may cause some DNA to partition in the aqueous phase.
+	* Transfer the aqueous phase (colorless top layer) to a fresh tube.
+* Add 500 μL of isopropanol per 1 mL of TRI Reagent solution, vortex for 5–10 sec, and incubate at room temp for 5–10 min.
+	* Add 500 μL of isopropanol per 1 mL of TRI Reagent solution used for sample homogenization.
+	* Vortex at moderate speed for 5–10 sec.
+	* Incubate the samples at room temp for 5–10 min.
+* Centrifuge at 12,000 x g for 8 min at 4–25°C, and discard the supernatant.
+	* Centrifuge at 12,000 x g for 8 min at 4–25°C.
+	* Carefully remove the supernatant without disturbing the pellet.
+		* Precipitated RNA forms a gel-like or white pellet on the side and bottom of the tube.
+* Add 1 mL of 75% ethanol per 1 mL of TRI Reagent solution
+* Centrifuge at 7,500 x g for 5 min, remove the ethanol, and briefly air dry the RNA pellet.
+	* Centrifuge at 7,500 x g for 5 min at 4–25°C.  
+		* If the precipitated RNA floats or does not form a compact pellet, repeat the centrifugation at 12,000 x g for 5 min to consolidate the pellet at the bottom of the tube.
+	* Remove the ethanol wash without disturbing the pellet.
+	* Remove all residual ethanol by centrifuging again briefly and removing the ethanol that collects with a fine tip pipette. **Complete removal of ethanol is necessary for the RNA to perform well in downstream applications.**
+	* Air dry the RNA pellet for 3–5 min.
+		* Do not completely dry the RNA pellet as this will greatly decrease its solubility. 
+* Dissolve RNA in the buffer of your choice.
+	* Dissolve RNA in THE RNA Storage Solution (P/N AM7000, AM7001), Nuclease-free Water, or your choice of buffer‡ by passing the solution a few times through a pipette tip or by vigorous vortexing
+		* The resuspension volume is determined by the size of the RNA pellet. 3–5 mm pellets typically require 300–500 μL. If necessary, increase the resuspension volume or incubate at 55–60°C to completely dissolve the pellet.
+	* Store at 4°C for immediate analysis. For long-term storage, store at –70°C or colder.
+	
 ### Quantify all RNA samples
 Results will be used for calibration points during library generation
 Refer to manual during procedure (steps below are for notes and comments)
