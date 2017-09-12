@@ -108,7 +108,7 @@ Refer to manual during procedure (steps below are for notes and comments)
 
 Reagents and supplies
 * Qubit® RNA HS Assay Kit (ThermoFisher Q32852)
-* Microcentrifuge tubes for florescence (Cat # XXXX)
+* Microcentrifuge tubes for florescence (Fisher Catalog # 07-200-183)
 
 Equipment
 * Qubit® 3.0 Flourometer
@@ -187,7 +187,7 @@ well)
 
 CLEAN THE ELECTRODES AGAIN AFTER EVERY RUN
 
-## Begin KAPA Stranded mRNA-Seq Kit using 1/2 rxn volumes##
+## Begin KAPA Stranded mRNA-Seq Kit using 1/2 rxn volumes
 This should take 8-10 hours
 Refer to manual during procedure (steps below are for notes and comments)
 
@@ -217,15 +217,16 @@ Annealing buffer stock (10X):
 | EDTA| 10 mM|
 
 10 mM Tris-HCL (pH 8.0 - 8.5)
-###Equipment 
+### Equipment 
 
 * Magnetic stand and compatible tubes or striptubes 
 * Thermocycler
 * SPRI purification beads (KAPA Pure Beads or AmpureXP)
 
-###Custom Oligos needed to make adapters:
+### Custom Oligos needed to make adapters:
 
 ![alt text](/RNAadapter.png)
+
 
 |Oligo Name| Sequence|
 |----------|---------|
@@ -243,7 +244,7 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 2.   In a thermocyler, incubate at 97.5°C for 2.5 minutes, and then cool at a rate of not greater than 3°C per minute until the solution reaches a temperature of 21°C. Hold at 4°C.
 3.   Prepare final working strength concentrations of annealed adapters from this annealed stock (the appropriate working stock dilution for your experiment can be determined from the chart below). For convenience, it is possible to store the adapters at 4°C while in active use.  
 
-####Adapter concentration will vary depending on overall RNA yield, see table below:
+#### Adapter concentration will vary depending on overall RNA yield, see table below:
 |Quantity of starting material|Adapter stock concentration|Adapter concentration in ligation reaction|
 |----|----|-----|
 |100 – 250 ng|140 nM| 10 nM|
