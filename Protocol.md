@@ -225,7 +225,7 @@ Annealing buffer stock (10X):
 
 ###Custom Oligos needed to make adapters:
 
-Jon can you add a figure here on the adapters... Illumina calls P1 P5 and P2 P7... just to avoid confusion for the eventual user of this protocol.
+![alt text](/RNAadapter.png)
 
 |Oligo Name| Sequence|
 |----------|---------|
@@ -239,16 +239,25 @@ Jon can you add a figure here on the adapters... Illumina calls P1 P5 and P2 P7.
 ### Anneal RNA Adapters
 Single-stranded oligos need to be annealed with their appropriate partner before ligation. 
  
-* To create Adapter P1, combine each oligo 1.1 with its complementary oligo 1.2 in a 1:1 ratio in working strength annealing buffer (final buffer concentration 1x) for a total annealed adapter concentration of 40uM (for example, if purchased oligos are resuspended to an initial concentration of 100uM, use 40ul oligo 1.1, 40ul oligo 1.2, 10ul 10x annealing buffer and 10ul nuclease-free water). Do the same for oligos 2.1 and 2.2 to create the common adapter P2. 
+* To create Adapter SAI1_I5, combine Universal_SAI1_Adapter with Indexed_Adapter_SAI1_I5 in a 1:1 ratio in working strength annealing buffer (final buffer concentration 1x) for a total annealed adapter concentration of 40uM (for example, if purchased oligos are resuspended to an initial concentration of 100uM, use 40uL Universal_SAI1_Adapter, 40ul Indexed_Adapter_SAI1_I5, 10ul 10x annealing buffer and 10ul nuclease-free water). Pair Universal_SAI1_Adapter with Indexed_Adapter_SAI1_I8, Indexed_Adapter_SAI1_I9, Indexed_Adapter_SAI1_I11 in the same fasion.
 2.   In a thermocyler, incubate at 97.5°C for 2.5 minutes, and then cool at a rate of not greater than 3°C per minute until the solution reaches a temperature of 21°C. Hold at 4°C.
-3.   Prepare final working strength concentrations of annealed adapters from this annealed stock (the appropriate working stock dilution for your experiment can be determined from our ligation molarity calculator-WILL PROBABLY HAVE TO ADD DETAILS). For convenience, it is possible to store the adapters at 4°C while in active use.
+3.   Prepare final working strength concentrations of annealed adapters from this annealed stock (the appropriate working stock dilution for your experiment can be determined from the chart below). For convenience, it is possible to store the adapters at 4°C while in active use.  
 
+####Adapter concentration will vary depending on overall RNA yield, see table below:
+|Quantity of starting material|Adapter stock concentration|Adapter concentration in ligation reaction|
+|----|----|-----|
+|100 – 250 ng|140 nM| 10 nM|
+|251 – 500 ng|350 nM|25 nM|
+|501 – 2000 ng|700 nM|50 nM|
+|2001 – 4000 ng|1400 nM|100 nM|
+
+For Puritz and Lotterhos 2017, we used 4000 ng starting RNA, but because of difficulties assessing and quantifying molluscan RNA, we chose to use a 700 nM working stock with a final reaction concentration of 50 nM.
 
 **Procedure:**
-* Prepare mastermixes for 4 libraries
-  * See tables in manual and tables below for guidelines:
+* Prepare mastermixes for number of libraries (individual RNA extractions)
+  * See tables in manual and tables below for guidelines (We are using 1/2 reactions):
 
-|Component| Total Volume Needed for 4 RXNs|
+|Component| Total Volume Needed for 4 RXNs (Includes 20% excess)|
 |---------|--------------------|
 |**1st Strand Synthesis Master Mix:**|--|
 |1st Strand Synthesis Buffer|22 μl|
@@ -259,7 +268,7 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 |Fragmented, primed RNA|10 μl| 
 |**Total Reaction Volume**| **15 μl**|
 
-|Component| Total Volume Needed for 4 RXNs|
+|Component| Total Volume Needed for 4 RXNs (Includes 10% excess)|
 |---------|--------------------|
 |**2nd Strand Synthesis and Marking Master Mix:**|--|
 |2nd Strand Marking Buffer|62 μl|
@@ -270,7 +279,7 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 |Fragmented, primed RNA|15 μl| 
 |**Total Reaction Volume**| **30 μl**|
 
-|Component| Total Volume Needed for 4 RXNs (10% excess)|
+|Component| Total Volume Needed for 4 RXNs (Includes 10% excess)|
 |---------|--------------------|
 |**A-Tailing Master Mix:**|--|
 |Water|52.8 μl|
@@ -279,7 +288,7 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 |**Total Master Mix Volume**| **66 μl**|
 |**Resuspend beads in a volume of:**|** 15 μl** |
 
-|Component| Total Volume Needed for 4 RXNs|
+|Component| Total Volume Needed for 4 RXNs (Includes 10% excess)|
 |---------|--------------------|
 |**Adapter Ligation Master Mix:**|--|
 |Water|35.2 μl|
@@ -292,7 +301,7 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 |Adapter (350 nM – 1400 nM, as appropriate)|2.5 μl|
 |**Total Reaction Volume**| **35 μl**|
 
-|Component| Total Volume Needed for 4 RXNs (10% excess)|
+|Component| Total Volume Needed for 4 RXNs (Includes 10% excess)|
 |---------|--------------------|
 |**Library Ampli cation Master Mix:**|--|
 |2X KAPA HiFi HotStart ReadyMix|55 μl|
