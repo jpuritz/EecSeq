@@ -372,7 +372,7 @@ For Puritz and Lotterhos 2017, we used 4000 ng starting RNA, but because of diff
 * Thoroughly resuspend the KAPA mRNA Capture Beads with captured mRNA in 11 μl of 1X Fragment, Prime and Elute Buffer.
 
 ---
-###Safe Stopping Point
+### Safe Stopping Point
 Resuspended beads with captured mRNA may be stored at 4 oC for up to 24 hours. Do not freeze the samples as this will damage the beads. When ready, proceed to step below.
 
 ---
