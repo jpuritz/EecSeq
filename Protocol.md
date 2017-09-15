@@ -45,7 +45,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 
 
-
+---
 
 
 
@@ -53,15 +53,15 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 ### Extract RNA from individuals to be used for probes
 *Refer to manual during procedure (steps below are for notes and comments)*
-#### Using unmodified TRI Reagent Protocol [LINK](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/9738M_D.pdf)(Below are summary steps)
+### Using unmodified TRI Reagent Protocol [LINK](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/9738M_D.pdf)(Below are summary steps)
 
-**Reagents and supplies**
+#### Reagents and supplies
 * Nuclease-free Water
 * 1-bromo-3-chloropropane (BCP; recommended, e.g., MRC, Cat #BP 151), or chloroform without added isoamyl alcohol 100% 
 * isopropanol, ACS grade or better
 * 100% ethanol, ACS grade or better
 
-**Equipment**
+#### Equipment
 * Tissue homogenizer with replacable probes (such as Qiagen TissueRuptor®)
 * Appropriately sized RNase-free centrifuge tubes with secure closures, compatible with phenol/chloroform (polypropyl- ene, or polyallomer), and capable of withstanding centrifugal forces of 12,000G
 * Centrifuge capable of 12,000 x g
@@ -70,7 +70,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 * Place all pipettes, tips, and supplies inside the hood and expose to UV for 30 minutes. (Do not put your samples in the UV hood!)
 * Prepare 75% ethanol by mixing 250 μL nuclease-free water with 750 μL 100% ethanol per mL of TRI Reagent solution to be used. Include 10% overage to ensure a sufficient volume.
 
-**Procedure**
+#### Procedure
 * Homogenize tissue samples in 10–20 volumes TRI Reagent solution. Homogenize cultured cells in 1 mL TRI Reagent solution per 5–10 x 106 cells, or per 10 cm2 culture dish area.
 * Incubate the homogenate for 5 min at room temp.
 * (Optional) Centrifuge at 12,000 xg for 10 min at 4°C and transfer the supernatant to a fresh tube.
@@ -113,7 +113,7 @@ Reagents and supplies
 Equipment
 * Qubit® 3.0 Flourometer
 
-**Procedure (Standard HS RNA protocol)**
+#### Procedure (Standard HS RNA protocol)
 * Set up the required number of 0.5-mL tubes for standards and samples. The Qubit® RNA HS Assay requires 2 standards.
 * Label the tube lids.
 * Prepare the Qubit® working solution by diluting the Qubit® RNA HS Reagent 1:200 in Qubit® RNA HS Buffer. Use a clean plastic tube each time you prepare Qubit® working solution. **Do not mix the working solution in a glass container.**
@@ -132,7 +132,7 @@ Equipment
 
 ## Visualize RNA on BioAnalyzer
 
-Bioanalyzer Instructions
+#### Bioanalyzer Instructions
 
 Prepping the Gel (use filtered gel within 4 weeks)
 
@@ -140,7 +140,7 @@ Prepping the Gel (use filtered gel within 4 weeks)
 2. Centrifuge at 1500g for 10 mins at room temp
 3. Aliquot 65uL filtered gel into 0.5mL RNase-free tubes
 
-Prepping the Gel-Dye Mix
+#### Prepping the Gel-Dye Mix
 
 1. Allow RNA dye (blue) to equilibrate to room temp for 30 mins (in the dark)
 2. Vortex RNA dye (blue) for 10 secs and spin down
@@ -185,13 +185,13 @@ well)
 3. Vortex chip for 1 min at 2400 rpm
 4. Run the chip in the bioanalyzer within 5 mins (RNA assay)
 
-CLEAN THE ELECTRODES AGAIN AFTER EVERY RUN
+**CLEAN THE ELECTRODES AGAIN AFTER EVERY RUN**
 
-## Begin KAPA Stranded mRNA-Seq Kit using 1/2 rxn volumes
+### Begin KAPA Stranded mRNA-Seq Kit using 1/2 rxn volumes
 This should take 8-10 hours
 Refer to manual during procedure (steps below are for notes and comments)
 
-### Reagents 
+#### Reagents 
 
 KAPA Stranded mRNA-Seq Kit (KAPA #KK8420). This kit includes all the enzymes and buffers required for cDNA library preparation from  isolation of poly(A)-tailed RNA. Kits include reagents for RNA fragmentation, 1st strand cDNA synthesis and 2nd strand synthesis/marking, and cDNA library preparation, including A-tailing, ligation and library amplification. 
 
@@ -206,7 +206,7 @@ Steps in Library construction:
 	* **NOTE** Here, we insert custom adapters.  See below.
 * Library amplification to amplify library fragments carrying appropriate adapter sequences at both ends using high-fidelity, low-bias PCR; the strand marked with dUTP is not amplified.
 
-### Additional reagents needed:
+#### Additional reagents needed:
 
 Annealing buffer stock (10X):
 
@@ -217,13 +217,13 @@ Annealing buffer stock (10X):
 | EDTA| 10 mM|
 
 10 mM Tris-HCL (pH 8.0 - 8.5)
-### Equipment 
+#### Equipment 
 
 * Magnetic stand and compatible tubes or striptubes 
 * Thermocycler
 * SPRI purification beads (KAPA Pure Beads or AmpureXP)
 
-### Custom Oligos needed to make adapters:
+#### Custom Oligos needed to make adapters:
 
 ![alt text](/RNAadapter.png)
 
