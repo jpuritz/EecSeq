@@ -732,8 +732,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |Initial denaturation|98 °C|2 min|
 |Treatment|68 °C|5 hours|
 
-* Caution
-  * Following incubation, keep the thermal cycler lid closed and the temperature held at 68°C. Do not remove the reaction mix tube from thermal cycler prior to and during DSN treatment.
+* **Caution**- Following incubation, keep the thermal cycler lid closed and the temperature held at 68°C. Do not remove the reaction mix tube from thermal cycler prior to and during DSN treatment.
 * Dilute the 10X DSN Master buffer supplied in the DSN kit to 2X with nuclease‐ free water
 * Pre‐heat the 2X DSN buffer on the pre‐heated heat block at 68°C.
   * **Note:** Do not remove the 2X DSN buffer from the heat block during DSN treatment.
@@ -753,11 +752,11 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 
 ---
 
-###Safe Stopping Point
+### Safe Stopping Point
 This is a safe stopping point. If you are stopping, store your sample at ‐15° to ‐25°C.
 
 ---
-###SPRI Cleanup
+### SPRI Cleanup
 
 * Perform a 1X SPRI® cleanup by combining the following:
 
@@ -866,7 +865,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 
 ## Probe Synthesis
 
-Review quantifications for probes.  We would like around 1000-2000 ng of probes per capture.  If not enough of probes is obtained, the PCR product can be re-amplified.
+Review quantifications for probes.  Ideally, there should be about 500 ng of probes per capture.  If not enough of probes is obtained, the PCR product can be re-amplified.
 
 ### Remove adapters from cDNA
 
@@ -877,64 +876,38 @@ Review quantifications for probes.  We would like around 1000-2000 ng of probes 
 |SalI-HF| NEB| R3138T|
 |Agencourt AMPure XP  |Beckman Coulter   | A63881|
 
-* Setup four different restriction digests
-
-|Component|Volume|   |Component|Volume|   |Component|Volume|   |Component|Volume|
-|---------|------|---|---------|------|---|---------|------|---|---------|------|
-| 10X Cutsmart Buffer| 5 μl| -| 10X Cutsmart Buffer| 5 μl| -| 10X Cutsmart Buffer| 5 μl|- | 10X Cutsmart Buffer| 5 μl| 
-| BsrGI-HF Enzyme (100 units)| 5 μl |-| SalI-HF Enzyme (100 units)| 1 μl | -| NcoI-HF Enzyme (100 units)| 5 μl | -| HindIII-HF Enzyme (100 units)| 1 μl|  
-| Molecular Grade H20| 16 μl|-| Molecular Grade H20| 21 μl|-| Molecular Grade H20| 16 μl|-| Molecular Grade H20| 21 μl|
-| DSN Enriched Library| 24 μl| -| DSN Enriched Library| 24 μl| -| DSN Enriched Library| 24 μl| -| DSN Enriched Library| 24 μl| 
-
-**Make sure library is matched with appopriate enzyme**
-
-* Incubate reactions in thermocycler at 37°C for at least 8 hours
-
-* Perform a 1.5X SPRI® cleanup by combining the following:
+* Setup a restriction digest using 1 μg of DSN library
 
 |Component|Volume|
 |---------|------|
-|RE treated DSN Library| 50 μl|
-|Agencourt® AMPure® XP reagent| 75 μl|
-|**Total Volume**| **125 μl**|
+| 10X Cutsmart Buffer| 4 μl|
+|SalI-HF Enzyme (100 units)| 1 μl |
+| Molecular Grade H20| 22.75 μl|
+| DSN Enriched Library| 12.25 μl|
+|**Total Volume**| **40 μl**|
 
-* Thoroughly resuspend the beads by pipetting up and down multiple times.
-* Incubate the plate/tube at room temperature for 5 – 15 min to allow the DNA to bind to the beads.
-* Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
-* Carefully remove and discard 115 μl of supernatant.
-* Keeping the plate/tube on the magnet, add 200 μl of 80% ethanol.
-* Incubate the plate/tube at room temperature for ≥30 sec.
-* Carefully remove and discard the ethanol.
-* Keeping the plate/tube on the magnet, add 200 μl of 80% ethanol.
-* Incubate the plate/tube at room temperature for ≥30 sec.
-* Carefully remove and discard the ethanol. Try to remove all residual ethanol without disturbing the beads.
-* Dry the beads at room temperature, until all of the ethanol has evaporated. **Caution: over-drying the beads may result in dramatic yield loss.**
-* Remove the plate/tube from the magnet.
-* Thoroughly resuspend the beads in 20 μl of 10 mM Tris-HCl (pH 8.0). 
-* Incubate the plate/tube at room temperature for 2 min to allow the DNA to elute off the beads.
-* Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
-
-###Remove 5' and 3' overhangs
+* Incubate reactions in thermocycler at 37°C for at least 8 hours, prefereably 12-16 hours.
 
 * **Using the same tubes from the previous step** combine the following:
 
 |Component|Volume|
 |---------|------|
-|Library| 20 μl|
-|10X Mung Bean Nuclease buffer| 5 μl|
-|Mung Bean Nuclease (10 units per μl)| 5 μl|
-|Molecular Grade H20| 20 μl|
-|**Total Volume**| **50 μl**|
+|Digested Library| 40 μl|
+|10X Mung Bean Nuclease buffer| 4.5 μl|
+|Mung Bean Nuclease (10 units per μl)| 0.5 μl|
+|**Total Volume**| **45 μl**|
 
 * Incubate at 30°C for 30 minutes
 
-* Perform a 1.5X SPRI® cleanup by combining the following:
+* Perform a 1.8X SPRI cleanup by combining the following:
+
+#### This step may be possbile to skip and proceed directly to the 1.5X SPRI Cleanup.
 
 |Component|Volume|
 |---------|------|
-|MBN reaction| 50 μl|
-|Agencourt® AMPure® XP reagent| 75 μl|
-|**Total Volume**| **125 μl**|
+|MBN reaction| 45 μl|
+|Agencourt® AMPure® XP reagent| 81 μl|
+|**Total Volume**| **126 μl**|
 
 * Thoroughly resuspend the beads by pipetting up and down multiple times.
 * Incubate the plate/tube at room temperature for 5 – 15 min to allow the DNA to bind to the beads.
@@ -948,17 +921,50 @@ Review quantifications for probes.  We would like around 1000-2000 ng of probes 
 * Carefully remove and discard the ethanol. Try to remove all residual ethanol without disturbing the beads.
 * Dry the beads at room temperature, until all of the ethanol has evaporated. **Caution: over-drying the beads may result in dramatic yield loss.**
 * Remove the plate/tube from the magnet.
-* Thoroughly resuspend the beads in 21 μl of 10 mM Tris-HCl (pH 8.0). Volume needed depends on the number of captures. Calculate 10 μl per capture plus an aliquot for checking the probes concentration using Qubit.
+* Thoroughly resuspend the beads in 22 μl of 10 mM Tris-HCl (pH 8.0). Volume needed depends on the number of captures. Calculate 10 μl per capture plus an aliquot for checking the probes concentration using Qubit.
 * Incubate the plate/tube at room temperature for 2 min to allow the DNA to elute off the beads.
 * Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
 * Transfer 20 μl of the clear supernatant to a new plate/tube and proceed to next step.
 
 ---
 
-###Safe Stopping Point
+### Safe Stopping Point
 This is a safe stopping point. If you are stopping, store your sample at ‐15° to ‐25°C.
 
 ---
+
+* Perform a 1.5X SPRI cleanup by combining the following:
+
+|Component|Volume|
+|---------|------|
+|MBN reaction| 22 μl|
+|Agencourt® AMPure® XP reagent|33 μl|
+|**Total Volume**| **55 μl**|
+
+* Thoroughly resuspend the beads by pipetting up and down multiple times.
+* Incubate the plate/tube at room temperature for 5 – 15 min to allow the DNA to bind to the beads.
+* Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
+* Carefully remove and discard 115 μl of supernatant.
+* Keeping the plate/tube on the magnet, add 200 μl of 80% ethanol.
+* Incubate the plate/tube at room temperature for ≥30 sec.
+* Carefully remove and discard the ethanol.
+* Keeping the plate/tube on the magnet, add 200 μl of 80% ethanol.
+* Incubate the plate/tube at room temperature for ≥30 sec.
+* Carefully remove and discard the ethanol. Try to remove all residual ethanol without disturbing the beads.
+* Dry the beads at room temperature, until all of the ethanol has evaporated. **Caution: over-drying the beads may result in dramatic yield loss.**
+* Remove the plate/tube from the magnet.
+* Thoroughly resuspend the beads in 31 μl of 10 mM Tris-HCl (pH 8.0). Volume needed depends on the number of captures. Calculate 10 μl per capture plus an aliquot for checking the probes concentration using Qubit.
+* Incubate the plate/tube at room temperature for 2 min to allow the DNA to elute off the beads.
+* Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
+* Transfer 30 μl of the clear supernatant to a new plate/tube and proceed to next step.
+
+---
+
+### Safe Stopping Point
+This is a safe stopping point. If you are stopping, store your sample at ‐15° to ‐25°C.
+
+---
+
 
 ##Biotin Labeling
 
