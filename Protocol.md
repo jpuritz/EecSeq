@@ -680,10 +680,30 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 ### DSN Normalization
 #### DSN needs to be properly dilued and should be tested for activity levels before proceeding
 
+#### The protocol below was taken from Illumina's recommendations [LINK](https://support.illumina.com/content/dam/illumina-support/documents/myillumina/7836bd3e-3358-4834-b2f7-80f80acb4e3f/dsn_normalization_sampleprep_application_note_15014673_c.pdf)
+#### Reagents
+
+| Reagent| Supplier|
+|----------|--------------|
+|1 M HEPES buffer solution|Invitrogen, part # 15630‐080 |
+|5 M NaCl solution|Ambion, part # AM9760G|
+|KAPA HiFi HotStart PCR kit with dNTPs|Kapa, part #KK2502|
+|Strip tubes|General lab supplier|
+|DSN Kit|Evrogen, part # EA001 Sigma Aldrich, part # E7023|
+|Ethanol 200 proof (absolute) for molecular biology (500 ml)|AB, part # 4333764F|
+|PCR Primer PE 1.0|Included in Kapa stranded mRNA kit|
+|PCR Primer PE 2.0|Included in Kapa stranded mRNA kit|
+|SPRI beads|Agencourt AMPure, part # 29152; KAPA Pure Beads, part #KK8000|
+|Nuclease-free water|General lab supplier|
+
+#### Equipment
+* Thermocycler
+* Magentic stand compatible with strip tubes
+
+#### Procedure
+
 * First pool individual RNA libraries in equal quantities to create a single pool of 500 ng.
 	* For example pool 125 ng each of four individual libraries.
-
-##### This protocol was taken from Illumina's recommendations
 
 * Create a 4X hybridization solution
 
@@ -764,7 +784,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
 * Transfer 24 μl of the clear supernatant to a new plate/tube and proceed to next step.
 
-###PCR Enrichment
+### PCR Enrichment
 
 |Component|Volume|
 |---------|------|
@@ -785,12 +805,8 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |Extension|72 °C|30 sec|12|
 |Final Extension|72 °C|5 min|1|
 |Hold|10 °C | ∞|1|
----
-####Illumina recommends 12 cycles.  This could be increased.
-####Alternatively, we could split vials into libraries and probes here
----
 
-###SPRI Cleanup
+### SPRI Cleanup
 
 * Perform a 1.6X SPRI® cleanup by combining the following:
 
@@ -812,10 +828,10 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * Carefully remove and discard the ethanol. Try to remove all residual ethanol without disturbing the beads.
 * Dry the beads at room temperature, until all of the ethanol has evaporated. **Caution: over-drying the beads may result in dramatic yield loss.**
 * Remove the plate/tube from the magnet.
-* Thoroughly resuspend the beads in X μl of 10 mM Tris-HCl (pH 8.0).
+* Thoroughly resuspend the beads in 22 μl of 10 mM Tris-HCl (pH 8.0).
 * Incubate the plate/tube at room temperature for 2 min to allow the DNA to elute off the beads.
 * Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
-* Transfer 24 μl of the clear supernatant to a new plate/tube and proceed to next step.
+* Transfer 22 μl of the clear supernatant to a new plate/tube and proceed to next step.
 
 ## Quant libraries
 **Procedure (Standard HS DNA protocol)**
@@ -837,31 +853,28 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 
 ---
 
-##Split finished cDNA library for each sample into two vials (8 vials total)
+## Split finished cDNA library for each sample into two vials
 * One tube for sequencing
 * One tube for probe synthesis
 
 ---
 
-###Safe Stopping Point
+### Safe Stopping Point
 This is a safe stopping point. If you are stopping, store your sample at ‐15° to ‐25°C.
 
 ---
 
-##Probe Synthesis
+## Probe Synthesis
 
 Review quantifications for probes.  We would like around 1000-2000 ng of probes per capture.  If not enough of probes is obtained, the PCR product can be re-amplified.
 
-###Remove adapters from cDNA
+### Remove adapters from cDNA
 
-####Materials needed
+#### Materials needed
 | reagent                                | producer         | serial #      |            
 |----------------------------------------|------------------|-----------|
-|BsrGI-HF| NEB| R3575S|
 |Mung Bean Nuclease| NEB| M0250S|
 |SalI-HF| NEB| R3138T|
-|NcoI-HF| NEB| R3193S|
-|HindIII-HF| NEB| R3104T|
 |Agencourt AMPure XP  |Beckman Coulter   | A63881|
 
 * Setup four different restriction digests
