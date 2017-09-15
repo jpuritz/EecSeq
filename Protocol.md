@@ -2,13 +2,13 @@
 
 The Expressed Exome Capture Sequencing protocol is designed to create exome capture probes directly from RNA.  The probes are then used from hybrid capture of exome DNA sequences, allowing for genotyping of alleles at expressed genes.
 
-## Outline
+# Outline
 
 [RNA Prep](#rna-prep)
 * [RNA Extraction](#extract-rna-from-individuals-to-be-used-for-probes)
 * [Quantify](#quantify-all-rna-samples)
 * [Visualize](#visualize-rna-on-bioanalyzer)
-* [Library Prep](#stranded-mrna-seq-library-prep)
+* [mRNA Library Prep](#stranded-mrna-seq-library-prep)
 	* [Anneal adapters](#anneal-rna-adapters)
 	* [mRNA capture](#mrna-capture)
 	* [mRNA Elution, Fragmentation, and Priming](#mrna-elution,-fragmentation-and-priming)
