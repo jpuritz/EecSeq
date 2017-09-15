@@ -5,7 +5,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 ## Outline
 
 [RNA Prep](#rna-prep)
-* [RNA Extraction](#extract-rna-from-2-control-and-2-heat-shock-individuals)
+* [RNA Extraction](#extract-rna-from-individuals-to-be-used-for-probes)
 * [Quantify](#quantify-all-rna-samples)
 * [Visualize](#visualize-rna-on-bioanalyzer)
 * [Library Prep](#kapa-stranded-mrna-seq-kit-using-1/2-rxn-volumes)
