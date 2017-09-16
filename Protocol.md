@@ -28,7 +28,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 * [Remove 5' and 3' overhangs](#remove-5'-and-3'-overhangs)
 * [Biotin Labeling](#biotin-labeling)
 
-[Genomic Library Prep](#preparation-of-whole-genome-libraries-using-kapa-hyperplus-kit)
+[Genomic Library Prep](#preparation-of-whole-genome-libraries)
 * [Anneal Adapters](#anneal-adapters)
 * [End Repair](#end-repair)
 * [Adapter ligation](#adapter-ligation)
@@ -740,7 +740,6 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * With the reaction mix tube remaining within the thermal cycler, gently pipette the entire volume up and down 10 times to mix thoroughly using a pipette set to 40 μl.
   * **Note**:Pipette the solution directly to the bottom of the PCR tube and do not let the sample contact the side of the tube during the process.
   * **Note**: It is important to keep the thermal cycler closed, except for the time necessary to add the 2X DSN buffer and mix. When preparing more than one reaction mix tube, keep the thermal cycler lid closed when extracting the 2X DSN buffer from its tube, then open the thermal cycler lid only for the time necessary to add and mix the 2X DSN buffer.
-
 * Repeat steps 2 and 3 for each reaction mix tube.
 * Incubate the reaction mix tubes on the thermal cycler at 68°C for 10 minutes.
 * Quickly add 2 μl of DSN enzyme to the first reaction mix tube using a 2 μl pipette.
@@ -870,12 +869,13 @@ Review quantifications for probes.  Ideally, there should be about 500 ng of pro
 ### Remove adapters from cDNA
 
 #### Materials needed
-| reagent                                | producer         | serial #      |            
+| Reagent                                | Producer         | Catalog #      |            
 |----------------------------------------|------------------|-----------|
 |Mung Bean Nuclease| NEB| M0250S|
 |SalI-HF| NEB| R3138T|
 |Agencourt AMPure XP  |Beckman Coulter   | A63881|
 
+### Procedure
 * Setup a restriction digest using 1 μg of DSN library
 
 |Component|Volume|
@@ -966,21 +966,21 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 ---
 
 
-##Biotin Labeling
+## Biotin Labeling
 
-###Materials needed
+### Materials needed
 
-| reagent                                | producer         | serial #      |            
+| Reagent                                | Producer         | Catalog #      |            
 |----------------------------------------|------------------|-----------|
 |DecaLabel™ Biotin DNA Labeling Kit |Thermo Scientific | FERK0651   |                     
 
-###Procedure
+### Procedure
 
 * Add the following components into 1.5 ml microcentrifuge tube:
 
 |Component|Volume|
 |---------|------|
-|RE treated DSN Library| 20 μl|
+|RE and MBN treated DSN Library| 20 μl|
 |Decanucleotide in 5X Reaction Buffer| 10 μl|
 | Water, nuclease-free| 14 μl|
 |**Total Volume**| **44 μl**|
@@ -998,7 +998,8 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * Shake the tube and spin down in a microcentrifuge for 3-5 s. 
 * Incubate for 12-20 hours at 37°C. 
 
-####Optional:Control reaction
+---
+#### Optional:Control reaction
 * Add the following components into 1.5 ml microcentrifuge tube:
 
 |Component|Volume|
@@ -1018,6 +1019,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |Klenow fragment, exo– (5 u)| 1 μl|
 |**Total Volume**| **50 μl**|
 
+---
 
 * Perform a 1.5X SPRI® cleanup by combining the following:
 
@@ -1044,22 +1046,42 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
 * Transfer 19 μl of the clear supernatant to a new plate/tube and proceed to next step.
 
+## Quant Probes
+**Procedure (Standard HS DNA protocol)**
+* Set up the required number of 0.5-mL tubes for standards and samples. The Qubit® RNA HS Assay requires 2 standards.
+* Label the tube lids.
+* Prepare the Qubit® working solution by diluting the Qubit® DNA HS Reagent 1:200 in Qubit® DNA HS Buffer. Use a clean plastic tube each time you prepare Qubit® working solution. **Do not mix the working solution in a glass container.**
+* Add 190 μL of Qubit® working solution to each of the tubes used for standards.
+* Add 10 μL of each Qubit® standard to the appropriate tube, then mix by vortexing 2–3 seconds. Be careful not to create bubbles.
+* Add Qubit® working solution to individual assay tubes so that the final volume in each tube after adding sample is 200 μL.
+* Add each sample to the assay tubes containing the correct volume of Qubit® working solution, then mix by vortexing 2–3 seconds. The final volume in each tube should be 200 μL.
+* Allow all tubes to incubate at room temperature for 2 minutes.
+* On the Home screen of the Qubit® 3.0 Fluorometer, press DNA, then select DNA: High Sensitivity as the assay type. The “Read standards” screen is displayed. Press Read Standards to proceed.
+* Insert the tube containing Standard #1 into the sample chamber, close the lid, then press Read standard. When the reading is complete (~3 seconds), remove Standard #1.
+* Insert the tube containing Standard #2 into the sample chamber, close the lid, then press Read standard. When the reading is complete, remove Standard #2.
+* Press Run samples.
+* On the assay screen, select the sample volume and units
+* Insert a sample tube into the sample chamber, close the lid, then press Read tube. When the reading is complete (~3 seconds), remove the sample tube.
+* Repeat step last step until all samples have been read
+
 ---
 
-###Safe Stopping Point
+### Safe Stopping Point
 This is a safe stopping point. If you are stopping, store your sample at ‐15° to ‐25°C.
 
 ---
 
+## Preparation of whole genome libraries 
 
-##Preparation of whole genome libraries using KAPA HyperPlus Kit
+### Using KAPA HyperPlus Kit with 1/2 reactions
 
 Refer to [manual](https://www.kapabiosystems.com/document/kapa-hyperplus-library-preparation-kit-tds/?dl=1) during procedure (steps below are for notes and comments). 
 
-#### This assumes that genomic DNA is already extracted and sheared.
+#### For Puritz and Lotterhos 2017, genomic DNA was sheared to a modal peak of 150 bp using a Covaris sonicator.  The protocol below assumes you are starting with sheared DNA
 
+### Materials Needed
 
-Oligos needed:
+Adapter Oligos:
 
 |Name| 5' to 3' Sequence|
 |----------|---------------------------------------------|
@@ -1090,20 +1112,42 @@ Oligos needed:
 |DNA_P2.1|	P*GATCGGAAGAGCGAGAACAA|
 |DNA_P2.2|	GTGACTGGAGTTCACACGTGTGCTCTTCCGATC*T|
 
+PCR Primers:
+
+|Name| 5' to 3' Sequence|
+|----------|---------------------------------------------|
+|PCR1_P5_primer|AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATC*T|
+|PCR2_01_ATCACG|CAAGCAGAAGACGGCATACGAGATCGTGATGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_02_CGATGT|CAAGCAGAAGACGGCATACGAGATACATCGGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_03_TTAGGC|CAAGCAGAAGACGGCATACGAGATGCCTAAGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_04_TGACCA|CAAGCAGAAGACGGCATACGAGATTGGTCAGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_05_ACAGTG|CAAGCAGAAGACGGCATACGAGATCACTGTGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_06_GCCAAT|CAAGCAGAAGACGGCATACGAGATATTGGCGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_07_CAGATC|CAAGCAGAAGACGGCATACGAGATGATCTGGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_08_ACTTGA|CAAGCAGAAGACGGCATACGAGATTCAAGTGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_09_GATCAG|CAAGCAGAAGACGGCATACGAGATCTGATCGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_10_TAGCTT|CAAGCAGAAGACGGCATACGAGATAAGCTAGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_11_GGCTAC|CAAGCAGAAGACGGCATACGAGATGTAGCCGTGACTGGAGTTCAGACGTGTG*C|
+|PCR2_12_CTTGTA|CAAGCAGAAGACGGCATACGAGATTACAAGGTGACTGGAGTTCAGACGTGTG*C|
+
 ### Anneal Adapters
 Single-stranded oligos need to be annealed with their appropriate partner before ligation. 
  
 * To create Adapter P1, combine each oligo 1.1 with its complementary oligo 1.2 in a 1:1 ratio in working strength annealing buffer (final buffer concentration 1x) for a total annealed adapter concentration of 40uM (for example, if purchased oligos are resuspended to an initial concentration of 100uM, use 40ul oligo 1.1, 40ul oligo 1.2, 10ul 10x annealing buffer and 10ul nuclease-free water). Do the same for oligos 2.1 and 2.2 to create the common adapter P2. 
-2.   In a thermocyler, incubate at 97.5°C for 2.5 minutes, and then cool at a rate of not greater than 3°C per minute until the solution reaches a temperature of 21°C. Hold at 4°C.
-3.   Prepare final working strength concentrations of annealed adapters from this annealed stock (the appropriate working stock dilution for your experiment can be determined from our ligation molarity calculator). For convenience, it is possible to store the adapters at 4°C while in active use.
+* In a thermocyler, incubate at 97.5°C for 2.5 minutes, and then cool at a rate of not greater than 3°C per minute until the solution reaches a temperature of 21°C. Hold at 4°C.
+* Prepare final working strength concentrations of annealed adapters from this annealed stock. For convenience, it is possible to store the adapters at 4°C while in active use.  **For Puritz and Lotterhos 2017, a working stock of 40 μM was used, leading to a final adapter:insert molar ratio of ~ 50:1.**
 
+---
+
+### Procedure
 
 ### End repair
-* Adjust sample volume for fragmented DNA samples to 25 μl.
+* Adjust sample volume of 500 ng fragmented DNA to 22.5 μl.
 * Add the following to each sample:
 
 |Component|Volume|
 |---------|------|
+|KAPA Frag Buffer (10X) | 2.5|
 |End Repair & A-Tailing Buffer* | 3.5 μl|
 |End Repair & A-Tailing Enzyme Mix* | 1.5 μl|
 |Fragmented, double-stranded DNA| 25 μl |
@@ -1140,22 +1184,26 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 |2.5 ng|15 μM|200:1|
 |1 ng|15 μM|200:1|
 
+**For Puritz and Lotterhos (2017), a working stock of 40 μM was used, leading to a final adapter:insert molar ratio of ~ 50:1.**
+
 * In the same plate/tube(s) in which end repair and A-tailing was performed, assemble each adapter ligation reaction as follows:
 
 |Component|Volume|
 |---------|------|
 |End repair and A-tailing reaction product| 30 μl|
-|Adapter stock (concentration as required) | 2.5 μl|
+|P1 Adapter stock (concentration as required) **Barcode containing oligo** | 1.25 μl|
+|P2 Adapter stock (concentration as required) | 1.25 μl|
 |PCR-grade water*| 2.5 μl |
-|Ligation Buffer*| 30 μl |
+|Ligation Buffer*| 15 μl |
 |DNA ligase*| 5 μl |
 |**Total Volume**| **55 μl**|
 
 * Notes
+  * **Each P1 adapter has a unique barcode** these barcodes can be combined with Illumina indices (added later via PCR) for high levels of multiplexing. 
   * The water, buffer and ligase enzyme should preferably be premixed and added in a single pipetting step. Premixes are stable for ≤24 hrs at room temperature, for ≤3 days at 4°C, and for ≤4 weeks at -20°C.
   
 * Mix thoroughly and centrifuge briefly.
-* Incubate at 20°C for 15 min.
+* Incubate at 20°C for 60 min.
   * Note: to achieve higher conversion rates and library yields, particularly for low-input samples, consider increasing the ligation time—to a maximum of 4 hrs at 20°C, or overnight at 4°C. Please note that longer ligation times may lead to increased levels of adapter-dimer. Adapter concentrations may have to be optimized if ligation times are extended signi cantly.
 * Proceed immediately to the next step.
 
@@ -1180,7 +1228,7 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 * Carefully remove and discard the ethanol. Try to remove all residual ethanol without disturbing the beads.
 * Dry the beads at room temperature for 3 – 5 min, or until all of the ethanol has evaporated. *Caution: over-drying the beads may result in reduced yield.*
 * Remove the plate/tube(s) from the magnet.
-* Thoroughly resuspend the beads in in 12 μL of elution buffer (10 mM Tris-HCl, pH 8.0 – 8.5)
+* Thoroughly resuspend the beads in in 12.5 μL of elution buffer (10 mM Tris-HCl, pH 8.0 – 8.5)
 * Incubate the plate/tube(s) at room temperature for 2 min to elute DNA off the beads.
 * Place the plate/tube(s) on a magnet to capture the beads. Incubate until the liquid is clear.
 * Transfer 11 μL of supernatant to a new plate/tube(s):
@@ -1203,20 +1251,25 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 * Insert a sample tube into the sample chamber, close the lid, then press Read tube. When the reading is complete (~3 seconds), remove the sample tube.
 * Repeat step last step until all samples have been read
 
-###Library Amplification
+### Pool samples to be used with in the same index/capture.  
 
-* Assemble each library ampli cation reaction as follows:
+Each P1 adapter has a unique barcode sequence. These barcodes can be combined with Illumina indices (added later via PCR) for high levels of multiplexing within in a single lane of Illumina sequencing.  At this point samples with different barcodes but the same Illumina index can be pooled before amplification.  The current version of the protocol supports pooling 12 individuals per Illumina index, along with 12 unique Illumina Indices.
+
+### Library Amplification
+
+* Assemble each library amplification reaction as follows per pool:
 
 |Component|Volume|
 |---------|------|
 |KAPA HiFi HotStart ReadyMix (2X) | 12.5 μl|
-|Index PCR Primers F+R  | 2.5 μl|
-|Adapter-ligated library| 10.0 μl|
+|PCR1_P5 Primer (Universal)  | 1.25 μl|
+|PCR2 Primer (Indexed)  | 1.25 μl|
+|Adapter-ligated library pool| 10.0 μl|
 |**Total Volume**| **25 μl**| 
 
 * Calculate number of cycles needed based on previous quants
 
-|Amount of adapter- ligated DNA in ampli cation reaction| Number of cycles required to generate 1 μg of library DNA| 
+|Amount of adapter-ligated DNA in amplification reaction| Number of cycles required to generate 1 μg of library DNA| 
 |--------------|-------------------------------------------|
 |500 ng|1-2|
 |100 ng|3-4|
@@ -1225,6 +1278,8 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 |10 ng|8-9|
 |5 ng|11-12|
 |1 ng|12-13|
+
+### For Puritz and Lotterhos (2017), 6 PCR cycles were used.
 
 * Mix thoroughly and centrifuge briefly.
 * Amplify using the following cycling protocol:
@@ -1266,14 +1321,15 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 
 ---
 
-###Safe Stopping Point
+### Safe Stopping Point
 This is a safe stopping point. If you are stopping, store your sample at ‐15° to ‐25°C.
 
 ---
+# START AGAIN HERE
 
 ## Hybridization and Capture
 
-####Materials needed
+### Materials needed
 | reagent                                | producer         | serial #      |            
 |----------------------------------------|------------------|-----------|
 |Denhardt’s solution  (50x)              |Life Technologies | 750018        |           
@@ -1308,7 +1364,7 @@ Test the tubes and caps used for evaporation before starting by filling with kno
 
 Remember to perform one capture per pool of the libraries amplified with the same Illumina indexed primer.
 
-###Hybridization
+## Hybridization
 
 * Prepare the hybridization mix. Probes and blocking oligos are used in excess. Let's aim for 500 ng of probes and library
 
