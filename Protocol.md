@@ -21,7 +21,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 * [DSN Normalization](#dsn-normalization)
 	* [Enrichment](#pcr-enrichment)
 * [Quant Libraries](#quant-libraries)
-* [Split libraries](#split-finished-cdna-library-for-each-sample-into-two-vials-8-vials-total)
+* [Split libraries](#split-finished-cdna-library-for-each-sample-into-two-vials)
 
 [Probe Synthesis](#probe-synthesis)
 * [Remove sequencing adapters](#remove-adapters-from-cdna)
@@ -792,7 +792,6 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |10X KAPA Library Amplification Primer Mix| 5 μl|
 |**Total Volume per sample**| **50 μl**|
 
-* *For now, let's use the same master mix from the Kappa Kit*
 * Mix well by pipetting up and down several times
 * Amplify the library using the following thermal cycling protocol:
 
