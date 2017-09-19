@@ -965,7 +965,6 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 
 ---
 
-
 ## Biotin Labeling
 
 ### Materials needed
@@ -1325,12 +1324,10 @@ Each P1 adapter has a unique barcode sequence. These barcodes can be combined wi
 This is a safe stopping point. If you are stopping, store your sample at ‐15° to ‐25°C.
 
 ---
-# START AGAIN HERE
-
 ## Hybridization and Capture
 
 ### Materials needed
-| reagent                                | producer         | serial #      |            
+| Reagent                                | Supplier         | Catalog #      |            
 |----------------------------------------|------------------|-----------|
 |Denhardt’s solution  (50x)              |Life Technologies | 750018        |           
 |Dynabeads® M-280 Streptavidin           |Life Technologies | 11205D, M-270 |           
@@ -1340,7 +1337,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |Agencourt AMPure XP                     |Beckman Coulter   | A63881|
 
 
-|name       |5' to 3' Sequence                                                |
+|Name       |5' to 3' Sequence                                                |
 |-----------|------------------------------------------------------------------|
 | BO1.P5.F  | AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT       |
 | BO2.P5.R  | AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT       |
@@ -1348,29 +1345,27 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 | BO4.P7.R  | AGATCGGAAGAGCACACGTCTGAACTCCAGTCACIIIIIIATCTCGTATGCCGTCTTCTGCTTG |
 
 
-Solutions to prepare:
+Solutions needed:
 
-- 10 mM Tris-HCl pH 8.5 or PCR-grade water
-- EDTA 500 mM
-- SDS 10%
-- TEN (10 mM Tris-HCl pH 7.5, 1 mM EDTA, 1M NaCl)
-- 1x SSC / 0.1% SDS
-- 0.5x SSC / 0.1% SDS
-- 0.1x SSC / 0.1% SDS
+* 10 mM Tris-HCl pH 8.5 or PCR-grade water
+* EDTA 500 mM
+* SDS 10%
+* TEN (10 mM Tris-HCl pH 7.5, 1 mM EDTA, 1M NaCl)
+* 1x SSC / 0.1% SDS
+* 0.5x SSC / 0.1% SDS
+* 0.1x SSC / 0.1% SDS
 
 Protocol based on previously described methods [hyRAD](https://github.com/chiasto/hyRAD/blob/master/wetlab.md#4-hybridization-capture-and-library-re-amplification) and [general capture](http://openwetware.org/wiki/Hyb_Seq_Prep)
-
-Test the tubes and caps used for evaporation before starting by filling with known amount of water and keeping at 65°C for 48 hours.
 
 Remember to perform one capture per pool of the libraries amplified with the same Illumina indexed primer.
 
 ## Hybridization
 
-* Prepare the hybridization mix. Probes and blocking oligos are used in excess. Let's aim for 500 ng of probes and library
+* Prepare the hybridization mix. Probes and blocking oligos are used in excess. We recommend using 500 ng of probes with 500 ng of gDNA library, but have also successfully captured with as little as 100 ng of probes and 100 ng of library.  **Yield will scale directly with input**
 
 | Component                                | Volume  |
 | -------------------------------------- | ----------- |
-| water                                  | 3.5 μl        |
+| Molecular Grade Water                  | 3.5 μl        |
 | SSC (20x)                              | 12.0  μl      |
 | EDTA (500 mM)                          | 0.4 μl        |
 | SDS (10%)                              | 0.4 μl        |
@@ -1384,55 +1379,47 @@ Remember to perform one capture per pool of the libraries amplified with the sam
 | probes (500 ng)               | 10.0 μl         |
 
 
-* Incubate at 95°C for 10 minutes, then at 65°C for 48 hours. Mix from time to time. The best is to use rotor in the hybridization oven, but it is also possible to use a standard PCR machine.
+* Incubate at 95°C for 10 minutes, then at 65°C for 48 hours. Mix from time to time. This can be done in a standard thermocycler, but is probably best performed in an hybridization oven with a rotor. 
 
 ### Preparation of Dynabeads
 
 * Resuspend well Dynabeads M-280 (10 mg/ml).
-2. Dispense 10 μl of beads in a PCR tube.
-3. Wash:
-    - magnetize, remove and discard supernatant,
-    - resuspend in 200 μl of TEN.
+* Dispense 10 μl of beads in a PCR tube.
+* Wash:
+	* magnetize, remove and discard supernatant,
+	* resuspend in 200 μl of TEN.
+* Repeat the wash two times for a total of three washes
+* Store in 200 μl of TEN at room temperature until use.
 
-4. Perform previous step 3 times in total.
-5. Store in 200 μl of TEN at room temperature until use.
-  * If more captures are expected, increase the initial amount of beads accordingly, transfer the final resupension into an eppendorf tube and add the appropriate volume of TEN (10 μl of beads should be resuspended in 200 μl of TEN).
+If more captures are expected, increase the initial amount of beads accordingly, transfer the final resupension into an eppendorf tube and add the appropriate volume of TEN (10 μl of beads should be resuspended in 200 μl of TEN).
 
 ### Washes
 
 * Add 40 μl of the hybridization mixture to 200ul of Dynabeads
 * Gently mix with pippette or inverting tube
 * Incubate 30 min at room temperature.	
-
-
 * Place on the magnet
 * Remove supernatant and retain in case of DNA loss.
-* Resuspend beads in 200 μl of 65°C 1x SSC / 0.1% SDS. 
+* Resuspend beads in 200 μl of **65°C 1x SSC / 0.1% SDS**. 
 * Mix well and incubate for 15 min, 65°C.	
-
-
 * Place on the magnet
 * Remove supernatant and retain in case of DNA loss.
-* Replace with 200 μl of 65°C 1x SSC / 0.1% SDS. 
+* Replace with 200 μl of **65°C 1x SSC / 0.1% SDS**. 
 * Mix well and incubate for 10 min, 65°C.	
-
-
 * Place on the magnet
 * Remove supernatant and retain in case of DNA loss.
-* Replace with 200 μl of 0.5x SSC / 0.1% SDS.
+* Replace with 200 μl of **0.5x SSC / 0.1% SDS**.
 * Mix well, incubate for 10 min, 65°C.	
-	
 * Place on the magnet
 * Remove supernatant and retain in case of DNA loss.
-* Replace with 200 μl of 0.1x SSC / 0.1% SDS.
+* Replace with 200 μl of **0.1x SSC / 0.1% SDS**.
 * Mix well, incubate for 10 min, 65°C.	
-	
 * Place on the magnet
 * Remove supernatant and retain in case of DNA loss.
-* Replace with 30 μl of 80°C H20 
+* Replace with 22 μl of 80°C H20 
 * Mix well, incubate for for 10 min, 80°C.
 * Place on magnet
-* Remove and **SAVE** supernatant (this contains the hybridization-enriched products)
+* Remove and **SAVE THE SUPERNATANT** (this contains the hybridization-enriched fragments)
 * Discard the beads.						
 
 ### Library re-amplification
@@ -1442,7 +1429,8 @@ Remember to perform one capture per pool of the libraries amplified with the sam
 |Component|Volume|
 |---------|------|
 |KAPA HiFi HotStart ReadyMix (2X) | 12.5 μl|
-|Index PCR Primers F+R  | 2.5 μl|
+|PCR1_P5 Primer (Universal)  | 1.25 μl|
+|PCR2 Primer (Indexed)  | 1.25 μl|
 |Enriched Library| 10.0 μl|
 |**Total Volume**| **25 μl**| 
 
