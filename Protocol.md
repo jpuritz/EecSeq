@@ -52,7 +52,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 ### Extract RNA from individuals to be used for probes
 *Refer to manual during procedure (steps below are for notes and comments)*
-### Using unmodified TRI Reagent Protocol [LINK](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/9738M_D.pdf)(Below are summary steps)
+### Using unmodified TRI Reagent Protocol [LINK](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/9738M_D.pdf) (Below are summary steps)
 
 #### Reagents and supplies
 * Nuclease-free Water
