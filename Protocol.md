@@ -25,7 +25,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 [Probe Synthesis](#probe-synthesis)
 * [Remove sequencing adapters](#remove-adapters-from-cdna)
-* [Remove 5' and 3' overhangs](#remove-5'-and-3'-overhangs)
+* [Remove 5' and 3' overhangs](#remove-5-and-3-overhangs)
 * [Biotin Labeling](#biotin-labeling)
 
 [Genomic Library Prep](#preparation-of-whole-genome-libraries)
