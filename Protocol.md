@@ -17,7 +17,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 	* [A-tailing](#a-tailing)
 	* [Adapter Ligation](#adapter-ligation)
 	* [Library Enrichment](#library-amplificiation)
-* [Quant](#-quant-libraries)
+* [Quant](#quant-libraries)
 * [DSN Normalization](#dsn-normalization)
 	* [Enrichment](#pcr-enrichment)
 * [Quant Libraries](#quant-libraries)
