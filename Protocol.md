@@ -13,7 +13,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 	* [mRNA capture](#mrna-capture)
 	* [mRNA Elution, Fragmentation, and Priming](#mrna-elution-fragmentation-and-priming)
 	* [1st Strand Synthesis](#1st-strand-synthesis)
-	* [2nd Strang Synthesis](#2nd-strand-synthesis-and-marking)
+	* [2nd Strand Synthesis](#2nd-strand-synthesis-and-marking)
 	* [A-tailing](#a-tailing)
 	* [Adapter Ligation](#adapter-ligation)
 	* [Library Enrichment](#library-amplificiation)
