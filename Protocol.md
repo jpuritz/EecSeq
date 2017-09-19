@@ -625,7 +625,7 @@ The purified, adapter-ligated library DNA may be stored at 4 °C for up to 1 wee
 
 * Place the plate/tube on ice and proceed to **Library Amplification Cleanup**
 
-###Library Amplification Cleanup
+### Library Amplification Cleanup
 
 * Perform a 1X SPRI® cleanup by combining the following
 
