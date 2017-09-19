@@ -11,7 +11,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 * [mRNA Library Prep](#stranded-mrna-seq-library-prep)
 	* [Anneal adapters](#anneal-rna-adapters)
 	* [mRNA capture](#mrna-capture)
-	* [mRNA Elution, Fragmentation, and Priming](#mrna-elution,-fragmentation-and-priming)
+	* [mRNA Elution, Fragmentation, and Priming](#mrna-elution,-fragmentation,-and-priming)
 	* [1st Strand Synthesis](#1st-strand-synthesis)
 	* [2nd Strang Synthesis](#2nd-strand-synthesis-and-marking)
 	* [A-tailing](#a-tailing)
@@ -360,7 +360,7 @@ For Puritz and Lotterhos 2017, we used 4000 ng starting RNA, but because of diff
 * Place the plate/tube on the magnet and incubate at room temperature until the solution is clear. Remove and discard the supernatant.
 * Remove the beads from the magnet and resuspend in 100 μl of KAPA mRNA Bead Wash Buffer by pipetting up and down several times.
 * Place the plate/tube on the magnet and incubate at room temperature until the solution is clear. Remove and discard the entire volume of supernatant.
-#### mRNA Elution, Fragmentation and Priming
+#### mRNA Elution, Fragmentation, and Priming
 * Prepare the required volume of 1X Fragment, Prime and Elute Buffer as follows:
 
 |Component|Volume per sample|
