@@ -303,13 +303,13 @@ For Puritz and Lotterhos 2017, we used 4000 ng starting RNA, but because of diff
 
 |Component| Total Volume Needed for 4 RXNs (Includes 10% excess)|
 |---------|--------------------|
-|**Library Ampli cation Master Mix:**|--|
+|**Library Amplification Master Mix:**|--|
 |2X KAPA HiFi HotStart ReadyMix|55 μl|
 |10X KAPA Library Amplication Primer Mix|11 μl|
 |**Total Master Mix Volume**| **66 μl**|
 |**Final reaction composition:**|--|
 |Adapter-ligated library DNA|10 μl|
-|Library Ampli cation Master Mix|15 μl|
+|Library Amplification Master Mix|15 μl|
 |Balance of water (if required)|5 μl|
 |**Total Reaction Volume**| **30 μl**|
 
