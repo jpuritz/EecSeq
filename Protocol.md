@@ -1145,7 +1145,7 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 
   * The buffer and enzyme mix should preferably be pre-mixed and added in a single pipetting step. 
     * Premixes are stable for ≤24 hrs at room temperature, for ≤3 days at 4°C, and for ≤4 weeks at -20°C
-  * Vortex gently and spin down brie y. Return the reaction plate/tube(s) to ice. Proceed immediately to the next step.
+  * Vortex gently and spin down briefly. Return the reaction plate/tube(s) to ice. Proceed immediately to the next step.
   * Incubate in a thermocycler programmed as outlined below. A heated lid is required for this step. If possible, set the temperature of the heated lid to ~85°C (instead of the usual 105°C).
 
 |Step|Temp|Time|
