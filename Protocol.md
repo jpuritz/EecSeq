@@ -45,7 +45,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 
 ---
-
+Before you begin this protocol, you should order the custom oligos required for mRNA library prep
 
 
 ## RNA Prep
@@ -70,7 +70,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 * Prepare 75% ethanol by mixing 250 μL nuclease-free water with 750 μL 100% ethanol per mL of TRI Reagent solution to be used. Include 10% overage to ensure a sufficient volume.
 
 #### Procedure
-* Homogenize tissue samples in 10–20 volumes TRI Reagent solution. Homogenize cultured cells in 1 mL TRI Reagent solution per 5–10 x $10^6$ cells, or per 10 cm^2 culture dish area.
+* Homogenize tissue samples in 10–20 volumes TRI Reagent solution. Homogenize cultured cells in 1 mL TRI Reagent solution per 5–10 x 10^6 cells, or per 10 cm^2 culture dish area.
 * Incubate the homogenate for 5 min at room temp.
 * (Optional) Centrifuge at 12,000 xg for 10 min at 4°C and transfer the supernatant to a fresh tube.
 * Add 100 μL BCP per 1 mL of TRI Reagent solution, mix well, and incubate at room temp for 5–15 min.
@@ -78,7 +78,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 	* Cap the tubes tightly and shake vigorously for 15 sec.
 	* Incubate the mixture at room temperature for 5–15 min.
 * Centrifuge at 12,000 x g for 10–15 min at 4°C, then transfer the aqueous phase to a fresh tube.
-	* Centrifuge at 12,000 x g for 10–15 min at 4°C. Centrifugation at temperatures > 8°C may cause some DNA to partition in the aqueous phase.
+	* Centrifuge at 12,000 x g for 10–15 min at 4°C. Centrifugation at temperatures > 8°C may cause some DNA to partition in the aqueous phase, which is undesireable.
 	* Transfer the aqueous phase (colorless top layer) to a fresh tube.
 * Add 500 μL of isopropanol per 1 mL of TRI Reagent solution, vortex for 5–10 sec, and incubate at room temp for 5–10 min.
 	* Add 500 μL of isopropanol per 1 mL of TRI Reagent solution used for sample homogenization.
@@ -130,6 +130,8 @@ Refer to manual during procedure (steps below are for notes and comments)
 * Repeat step last step until all samples have been read
 
 ## Visualize RNA on BioAnalyzer
+
+Note that a Tapestation could also be used at this step.
 
 #### Bioanalyzer Instructions
 
