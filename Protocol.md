@@ -70,7 +70,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 * Prepare 75% ethanol by mixing 250 μL nuclease-free water with 750 μL 100% ethanol per mL of TRI Reagent solution to be used. Include 10% overage to ensure a sufficient volume.
 
 #### Procedure
-* Homogenize tissue samples in 10–20 volumes TRI Reagent solution. Homogenize cultured cells in 1 mL TRI Reagent solution per 5–10 x 106 cells, or per 10 cm2 culture dish area.
+* Homogenize tissue samples in 10–20 volumes TRI Reagent solution. Homogenize cultured cells in 1 mL TRI Reagent solution per 5–10 x $10^6$ cells, or per 10 cm^2 culture dish area.
 * Incubate the homogenate for 5 min at room temp.
 * (Optional) Centrifuge at 12,000 xg for 10 min at 4°C and transfer the supernatant to a fresh tube.
 * Add 100 μL BCP per 1 mL of TRI Reagent solution, mix well, and incubate at room temp for 5–15 min.
