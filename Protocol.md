@@ -45,7 +45,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 
 
 ---
-Before you begin this protocol, you should order the custom oligos required for mRNA library prep
+Before you begin this protocol, you should order the custom oligos required for mRNA library prep and genomic DNA library prep and anneal them. See [Anneal RNA adapters](#anneal-rna-adapters) and [Anneal DNA Adapters](#anneal-adapters)
 
 
 ## RNA Prep
