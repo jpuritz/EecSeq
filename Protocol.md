@@ -680,6 +680,9 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 
 
 ### DSN Normalization
+
+DSN normalization is critical ensuring an even distribution of coverage across probes.  There are a genes that are highly expressed in all cells and DSN normalization helps to remove these high abundance probes and transcripts.  
+
 #### DSN needs to be properly dilued and should be tested for activity levels before proceeding
 
 #### The protocol below was taken from Illumina's recommendations [LINK](https://support.illumina.com/content/dam/illumina-support/documents/myillumina/7836bd3e-3358-4834-b2f7-80f80acb4e3f/dsn_normalization_sampleprep_application_note_15014673_c.pdf)
@@ -784,7 +787,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * Place the plate/tube on a magnet to capture the beads. Incubate until the liquid is clear.
 * Transfer 24 μl of the clear supernatant to a new plate/tube and proceed to next step.
 
-### PCR Enrichment
+### PCR Enrichment of DSN Normalized Library
 
 |Component|Volume|
 |---------|------|
@@ -805,7 +808,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |Final Extension|72 °C|5 min|1|
 |Hold|10 °C | ∞|1|
 
-### SPRI Cleanup
+### SPRI Cleanup of DSN Normalized Library
 
 * Perform a 1.6X SPRI® cleanup by combining the following:
 
@@ -855,6 +858,8 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 ## Split finished cDNA library for each sample into two vials
 * One tube for sequencing
 * One tube for probe synthesis
+
+#### Note that this step is optional as sequening the probes directly is not necessary for exome capture analysis.  Alternatively, a portion of the mRNA library can be saved before DSN normalization for sequencing.  
 
 ---
 
@@ -1129,6 +1134,24 @@ Single-stranded oligos need to be annealed with their appropriate partner before
 * In a thermocyler, incubate at 97.5°C for 2.5 minutes, and then cool at a rate of not greater than 3°C per minute until the solution reaches a temperature of 21°C. Hold at 4°C.
 * Prepare final working strength concentrations of annealed adapters from this annealed stock. For convenience, it is possible to store the adapters at 4°C while in active use.  **For Puritz and Lotterhos 2017, a working stock of 40 μM was used, leading to a final adapter:insert molar ratio of ~ 50:1.**
 
+### Note about multiplexing and DNA adapters
+
+The above adapters have inline barcodes which will appear in the sequences and need to be demultiplexed bioinformatically.
+
+|Adapter| Inline Barcode|
+|-------|---------------|
+|1|GCATG|
+|2|AACCA|
+|3|CGATC|
+|4|TCGAT|
+|5|TGCAT|
+|6|CAACC|
+|7|GGTTG|
+|8|AAGGA|
+
+These inline barcodes can be combined with the 12 PCR primers that add a P7 Illumina index which is read directly in a sepeartate sequencing run and is returned to the user in index-labeled files.  With the above design 96 different individuals or pools could be multiplexed on a single lane.
+
+Alternatively, any TruSeq style DNA adapters could be used with this protocol as long as they match with the [Blockling Oligos](#blocking-oligos) used during [Probe Hybridization](#hybridization)
 ---
 
 ### Procedure
@@ -1329,7 +1352,7 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |Cot-1 DNA (1 mg/ml)                     |ThermoFischer     | 15279011|                   
 |Agencourt AMPure XP                     |Beckman Coulter   | A63881|
 
-
+## Blocking Oligos
 |Name       |5' to 3' Sequence                                                |
 |-----------|------------------------------------------------------------------|
 | BO1.P5.F  | AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT       |
