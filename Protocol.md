@@ -35,6 +35,7 @@ The Expressed Exome Capture Sequencing protocol is designed to create exome capt
 * [Amplification](#library-amplification)
 
 [Hybridization and Capture](#hybridization-and-capture)
+* [Blocking Oligos](#blocking-oligos)
 * [Hybridization](#hybridization)
 	* [Preparation of DynaBeads](#preparation-of-dynabeads)
 	* [Washes](#washes)
@@ -1353,6 +1354,9 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 |Agencourt AMPure XP                     |Beckman Coulter   | A63881|
 
 ## Blocking Oligos
+
+Note that if using custom DNA adapters, it is critical to ensure that the blocking oligos match the adapter sequences.
+
 |Name       |5' to 3' Sequence                                                |
 |-----------|------------------------------------------------------------------|
 | BO1.P5.F  | AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT       |
