@@ -461,7 +461,7 @@ Resuspended beads with captured mRNA may be stored at 4 oC for up to 24 hours. D
 ---
 
 ### SAFE STOPPING POINT
-* Resuspend the beads in 15 μl 1X A-Tailing Buffer (Table 5B), cover the reaction and store at 4 oC for up to 24 hours. Do not freeze the samples as this will damage the AMPure® XP® beads. When ready, proceed to **A-Tailing after Safe Stopping Point**.
+* Resuspend the beads in 15 μl 1X A-Tailing Buffer (see table above), cover the reaction and store at 4 oC for up to 24 hours. Do not freeze the samples as this will damage the AMPure® XP® beads. When ready, proceed to **A-Tailing after Safe Stopping Point**.
 
 ---
 
