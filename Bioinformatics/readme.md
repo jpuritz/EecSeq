@@ -227,6 +227,7 @@ Run custom adapter filtering script
 ```bash
 cat namelist | parallel ./Adapter_filter.sh {}
 ```
+## Map genomic reads to genome
 Run dDocent again with second configuration file for read mapping
 ```bash
 ./dDocent_ngs.sh configDNA2
@@ -248,4 +249,14 @@ samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_4-RGmd.bam | mawk '$6 !~/[8-9]
 samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_7-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_7.F.bam 
 samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_3-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_3.F.bam 
 samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_2-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_2.F.bam
+```
+
+## Generate data in Table 2
+
+The % of duplicate reads can be found in the md.\*.log files
+
+```bash
+for i in `cat namelist`; do nom=$(samtools view -@32 $i.F.bam -c -L mtDNA.bed); denom=$(samtools view -@32 $i.F.bam -c); dup=$(mawk '/Unknown/' "$i"_dup_metrics.txt | cut -f9); paste <(echo $i) <(echo $(( `zcat $i.F.fq.gz | wc -l` /2 ))) <(echo $(( `zcat $i.R1a.fq.gz | wc -l` /2 ))) <(samtools view -@ 32 $i-RG.bam -c) <(python -c "print(round("$dup" * 100,2))") <(echo $denom) <(python -c "print(round("$nom"/"$denom" *100,2))"); done > data.table2
+echo -e "Pool\tRaw_Reads\tFiltered_Reads\tMapped_Reads\t%_Duplicate\tFiltered_Mapped_Reads\t%_mapping_to_mitochondrial_genome" > header
+cat header data.table2 > table2.txt
 ```
