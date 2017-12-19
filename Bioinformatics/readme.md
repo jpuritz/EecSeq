@@ -205,10 +205,38 @@ Symlink to Genome
 ```bash
 ln -s $WORKING_DIR/Genome/Assembled_chromosomes/seq/virginica.ref3.0.fasta reference.fasta
 ```
-Download same dDocent version, configuration files, and custom Adapter filtering script
+Download same dDocent version, configuration files, and custom adapter filtering script
 ```bash
 wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/dDocent_ngs.sh
 wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/configDNA1
 wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/configDNA2
+wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/Adapter_filter.sh
 ```
+Make both dDocent and filter script executable
 
+```bash
+chmod +x dDocent_ngs.sh
+chmod +x Adapter_filter.sh
+```
+Run dDocent with first configuration file to run standard quality trimming and adapter removal
+
+```bash
+./dDocent_ngs.sh configDNA1
+```
+Run custom adapter filtering script
+```bash
+cat namelist | parallel ./Adapter_filter.sh {}
+```
+Run dDocent again with second configuration file for read mapping
+```bash
+./dDocent_ngs.sh configDNA2
+```
+Use Picard (to mark duplicates
+```bash
+java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_1-RG.bam O=ECI_1-RGmd.bam M=ECI_1_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI1.log 
+java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_2-RG.bam O=ECI_2-RGmd.bam M=ECI_2_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI2.log 
+java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_3-RG.bam O=ECI_3-RGmd.bam M=ECI_3_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI3.log 
+java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_4-RG.bam O=ECI_4-RGmd.bam M=ECI_4_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI4.log 
+java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_7-RG.bam O=ECI_7-RGmd.bam M=ECI_7_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI7.log 
+java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_12-RG.bam O=ECI_12-RGmd.bam M=ECI_12_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI12.log 
+```
