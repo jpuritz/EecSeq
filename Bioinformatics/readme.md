@@ -282,9 +282,9 @@ Calculate total RNA coverage per exon
 ```bash
 bedtools coverage -b m4.q4.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -counts -split > cov.m4q4.EiR.stats
 ```
-Paste RNA and DNA data together
+Paste RNA and DNA data together and remove mtDNA data
 ```bash
-paste cov.m4q4.EiR.stats <(cut -f4 $WORKING_DIR/DNA/cov.counts.filtered.merged.exon.stats) > RnD.cov.stats
+paste cov.m4q4.EiR.stats <(cut -f4 $WORKING_DIR/DNA/cov.counts.filtered.merged.exon.stats) | mawk '!/NC_007175.2/' > RnD.cov.stats
 ```
 Calculate lower 10th percentile of exon sizes
 ```bash
