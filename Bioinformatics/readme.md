@@ -231,7 +231,7 @@ Run dDocent again with second configuration file for read mapping
 ```bash
 ./dDocent_ngs.sh configDNA2
 ```
-Use Picard (to mark duplicates
+Use Picard [http://broadinstitute.github.io/picard/](http://broadinstitute.github.io/picard/) to mark duplicates
 ```bash
 java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_1-RG.bam O=ECI_1-RGmd.bam M=ECI_1_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI1.log 
 java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_2-RG.bam O=ECI_2-RGmd.bam M=ECI_2_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI2.log 
