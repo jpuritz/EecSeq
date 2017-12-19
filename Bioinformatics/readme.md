@@ -194,3 +194,14 @@ png(filename="Figure2.png", type="cairo",units="px", width=5600,
     height=3000, res=600, bg="transparent")
 p
 dev.off()
+```
+## DNA Adapter Trimming
+
+Change to DNA directory
+```bash
+cd $WORKING_DIR/DNA
+```
+Symlink to Genome
+```bash
+ln -s $WORKING_DIR/Genome/Assembled_chromosomes/seq/virginica.ref3.0.fasta reference.fasta
+```
