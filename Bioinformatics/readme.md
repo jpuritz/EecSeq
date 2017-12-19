@@ -205,3 +205,8 @@ Symlink to Genome
 ```bash
 ln -s $WORKING_DIR/Genome/Assembled_chromosomes/seq/virginica.ref3.0.fasta reference.fasta
 ```
+Download same dDocent version
+```bash
+wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/dDocent_ngs.sh
+```
+
