@@ -67,6 +67,7 @@ bedtools sort -i sorted.ref3.0.UTR.sc.b -faidx <(cut -f1 genome.file) > sorted.r
 Create bed file for mtDNA
 ```bash
 mawk '$1 ~ /NC_007175.2/' ref_C_virginica-3.0_top.bed > mtDNA.bed
+```
 ## RNA trimming and custom adapter removal
 
 `cd $WORKING_DIR/RNA`
@@ -265,6 +266,96 @@ cat header data.table2 > table2.txt
 
 ## Generate data for Figure 3
 
-Merge 
+Merge all capture pools into one file
 ```bash
 samtools merge -@64 filter.merged.bam ECI_1.F.bam ECI_2.F.bam ECI_3.F.bam ECI_4.F.bam ECI_7.F.bam ECI_12.F.bam
+```
+Get total coverage counts per exon
+```bash
+bedtools coverage -b filter.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -split -counts > cov.counts.filtered.merged.exon.stats
+```
+Change to RNA directory
+```bash
+cd $WORKING_DIR/RNA
+```
+Calculate total RNA coverage per exon
+```bash
+bedtools coverage -b m4.q4.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -counts -split > cov.m4q4.EiR.stats
+```
+Paste RNA and DNA data together
+```bash
+paste cov.m4q4.EiR.stats <(cut -f4 $WORKING_DIR/DNA/cov.counts.filtered.merged.exon.stats) > RnD.cov.stats
+```
+Calculate lower 10th percentile of exon sizes
+```bash
+mawk '{print $3 -$2}' RnD.cov.stats |sort -g | perl -e '$d=.1;@l=<>;print $l[int($d*@l)]'
+```
+Resut: `59`
+
+Calculate upper 10th percentile of exon sizes
+```bash
+mawk '{print $3 -$2}' RnD.cov.stats |sort -g | perl -e '$d=.9;@l=<>;print $l[int($d*@l)]'
+```
+Result: `517`
+
+Mark exons into size classes based on size distribution and create data table
+```bash
+mawk '{if ( $3 -$2 > 517 ) print $0 "\tUpper"; else if ( $3 - $2 < 59 ) print $0 "\tLower"; else if ( $3 - $2 > 58 && $3 - $2 < 518) print $0 "\tMiddle" }' RnD.cov.stats > rnd.cov.stats.class
+echo -e "Chrom\tStart\tEnd\tRNA_Coverage\tDNA_Coverage\tExon_Size_Class" > header
+cat header rnd.cov.stats.class > ExonCoverage.txt
+```
+
+## R code for Figure 3
+
+```R
+library(MASS)
+library(fields)
+library(ggplot2)
+library(grid)
+library(plyr)
+library(dplyr)
+library(scales)
+library(zoo)
+
+TotalExon <- read.table("./ExonCoverage.txt", header = TRUE)
+TotalExon <-as.data.frame(TotalExon)
+
+TotalExon$Exon_Size_Class <-factor(TotalExon$Exon_Size_Class, levels=c("Lower","Middle","Upper"))
+
+TotalExon$Exon_Size_Class <- revalue(TotalExon$Exon_Size_Class, c("Lower"="Lower 10%", "Upper"="Upper 10%", "Middle"="Middle 80%"))
+
+TX <- TotalExon
+TX$RNA_Coverage <- log(TX$RNA_Coverage +1)
+TX$DNA_Coverage <- log(TX$DNA_Coverage + 1)
+
+
+TotalExon$density <- interp.surface(kde2d(TX$RNA_Coverage, TX$DNA_Coverage), TX[,c("RNA_Coverage", "DNA_Coverage")])
+
+cbPalette <- c("#009E73","#D55E00","#56B4E9", "#0072B2","#E69F00", "#F0E442" , "#999999","#CC79A7")
+t <- cbPalette[1]
+cbPalette[1] <- cbPalette[2]
+cbPalette[2] <- t
+
+b <- ggplot(TotalExon, aes(x=RNA_Coverage+1,y=DNA_Coverage+1,alpha = 1/(density)),fill=Exon_Size_Class,color=Exon_Size_Class) + 
+  geom_abline(intercept =0, slope =1) +
+  geom_point(aes(color=TotalExon$Exon_Size_Class,fill=TotalExon$Exon_Size_Class,shape=TotalExon$Exon_Size_Class)) +
+  scale_alpha_continuous(guide = "none",range = c(.3, .99)) + 
+  scale_shape_manual(values=c(15,16,17), name="Exon Size Percentile") +
+  scale_fill_manual(values=cbPalette , name="Exon Size Percentile")+
+  scale_color_manual(values=cbPalette, name="Exon Size Percentile") +
+  scale_x_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),
+                labels = c("0","0","10","100","1,000","10,000","100,000"))+
+  scale_y_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),
+                labels = c("0","0","10","100","1,000","10,000","100,000"))+
+  xlab("Total RNA Depth per Exon")+
+  ylab("Total Capture Depth per Exon") +
+  theme_bw() +
+  theme(legend.position = c(0.85,0.25)) 
+
+png(filename="Figure3.png", type="cairo",units="px", width=5600, 
+    height=3000, res=600, bg="transparent")
+b
+dev.off()  
+
+
+
