@@ -115,7 +115,8 @@ Use samtools to merge each library into a single alignment file
 samtools merge -@64 m4.merged.bam RNA1m3Aligned.sortedByCoord.out.bam RNA2m3Aligned.sortedByCoord.out.bam RNA3m3Aligned.sortedByCoord.out.bam RNA4m3Aligned.sortedByCoord.out.bam
 ```
 Use samtools and mawk to filter out reads that did not uniquely map and reads that had significant hard or soft clipping >79 bp
-```bashsamtools view -@64 -q4 -h -F 0x100 -F 0x400 m4.merged.bam| mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/' | samtools view -b > m4.q4.merged.bam
+```bash
+samtools view -@64 -q4 -h -F 0x100 -F 0x400 m4.merged.bam| mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/' | samtools view -b > m4.q4.merged.bam
 ```
 Create symlinks to all bed files and the bedtools genome file
 ```bash
