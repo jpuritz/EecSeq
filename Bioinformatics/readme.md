@@ -66,15 +66,25 @@ bedtools sort -i sorted.ref3.0.UTR.sc.b -faidx <(cut -f1 genome.file) > sorted.r
 ## RNA trimming and custom adapter removal
 
 `cd $WORKING_DIR/RNA`
+
 Download custom adapter file
+
 `wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/TruSeq2-PE.fa`
+
 Download custom dDocent v2.2.ed20 that looks for adapters in working directory
+
 `wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/dDocent`
+
 Download the configuration file
+
 `wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/RNA.config`
+
 Use nano to alter configuration file for your system
+
 `nano RNA.config`
+
 Run dDocent to trim files
+
 `./dDocent RNA.config`
 
 #### The next steps require STAR (https://github.com/alexdobin/STAR) to be installed 
@@ -117,7 +127,9 @@ Use samtools to calculate the number of reads mapping, reads mapping to genes, a
 paste <(samtools view -@32 -c m4.q4.merged.bam) <(samtools view -@32 -c -L sorted.ref3.0.gene.bed m4.q4.merged.bam) <(samtools view -@32 -c -L sorted.ref3.0.exon.sc.bed m4.q4.merged.bam)
 ```
 Output:
+
 `21990025	17234677	12059266`
+
 Use bedtools to calculate per base pair coverage levels across various genomic regions
 ```bash
 bedtools coverage -hist -b m4.q4.merged.bam -a cv.ref3.intron.bed -g genome.file -sorted  -split | grep ^all > AllRNAm4q4.hist.AllIntron.all.split.txt
