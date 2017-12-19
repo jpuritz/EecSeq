@@ -231,7 +231,7 @@ Run dDocent again with second configuration file for read mapping
 ```bash
 ./dDocent_ngs.sh configDNA2
 ```
-Use Picard [http://broadinstitute.github.io/picard/](http://broadinstitute.github.io/picard/) to mark duplicates
+Use Picard [(http://broadinstitute.github.io/picard/)](http://broadinstitute.github.io/picard/) to mark duplicates
 ```bash
 java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_1-RG.bam O=ECI_1-RGmd.bam M=ECI_1_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI1.log 
 java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_2-RG.bam O=ECI_2-RGmd.bam M=ECI_2_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI2.log 
@@ -239,4 +239,13 @@ java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=EC
 java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_4-RG.bam O=ECI_4-RGmd.bam M=ECI_4_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI4.log 
 java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_7-RG.bam O=ECI_7-RGmd.bam M=ECI_7_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI7.log 
 java -Xms4g -jar /shared_lab/scripts/picard.jar MarkDuplicatesWithMateCigar I=ECI_12-RG.bam O=ECI_12-RGmd.bam M=ECI_12_dup_metrics.txt MINIMUM_DISTANCE=300 &> md.ECI12.log 
+```
+Use SAMtools to remove duplicates, secondary alignments, mappings with a quality score less than ten, and reads with more than 80 bp clipped
+```bash
+samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_12-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_12.F.bam 
+samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_1-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_1.F.bam
+samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_4-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_4.F.bam 
+samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_7-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_7.F.bam 
+samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_3-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_3.F.bam 
+samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_2-RGmd.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 64 -b > ECI_2.F.bam
 ```
