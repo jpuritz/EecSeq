@@ -152,7 +152,7 @@ library(scales)
 library(zoo)
 
 print(files <- list.files(pattern="AllRNAm4q4.hist."))
-#labs <- c("CDS","Exon","Intergenic","Intron")
+
 labs <- c("CDS","Intergenic","Intron","UTR")
 
 
@@ -169,7 +169,6 @@ for (i in 1:length(files)) {
 cov_df=do.call("rbind",cov)
 names(cov_df)[1:2]=c("depth","fraction")
 
-#pcbPalette <- c("#009E73","#0072B2" ,"#D55E00","#CC79A7")
 pcbPalette <- c("#009E73" ,"#D55E00","#CC79A7","#0072B2")
 
 p <- ggplot(cov_df, aes(x= depth, y=cov_cumul, color=sample))  + xlim(0,100)+
@@ -180,7 +179,6 @@ p <- ggplot(cov_df, aes(x= depth, y=cov_cumul, color=sample))  + xlim(0,100)+
   scale_fill_manual(values=pcbPalette) +
   ylab("% of Bases > Depth")+
   xlab("Depth")+
-  ggtitle("Genomic Coverage; RNA reads over all Exons; 88.4 Mb, 279.8 Mb, 316.5 Mb") +
   theme_bw() +
   theme(plot.title = element_text(size = 12, face = "bold",hjust = 0.5)) +
   theme(legend.title = element_blank()) + 
