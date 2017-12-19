@@ -129,7 +129,7 @@ paste <(samtools view -@32 -c m4.q4.merged.bam) <(samtools view -@32 -c -L sorte
 Output:
 
 `21990025	17234677	12059266`
-
+## Probe/RNA Coverage Analysis
 Use bedtools to calculate per base pair coverage levels across various genomic regions
 ```bash
 bedtools coverage -hist -b m4.q4.merged.bam -a cv.ref3.intron.bed -g genome.file -sorted  -split | grep ^all > AllRNAm4q4.hist.AllIntron.all.split.txt
