@@ -59,10 +59,14 @@ bedtools sort -i sorted.ref3.0.CDS.sc.b -faidx <(cut -f1 genome.file) > sorted.r
 ```
 Create bed file for untranslated regions (UTRs) of exons
 
-```bashbedtools subtract -a sorted.ref3.0.exon.bed -b sorted.ref3.0.CDS.bed -g genome.file -sorted > sorted.ref3.0.UTR.bed
+```bash
+bedtools subtract -a sorted.ref3.0.exon.bed -b sorted.ref3.0.CDS.bed -g genome.file -sorted > sorted.ref3.0.UTR.bed
 bedtools merge -i <(bedtools sort -i sorted.ref3.0.UTR.bed -faidx <(cut -f1 genome.file))> sorted.ref3.0.UTR.sc.b
 bedtools sort -i sorted.ref3.0.UTR.sc.b -faidx <(cut -f1 genome.file) > sorted.ref3.0.UTR.sc.bed
 ```
+Create bed file for mtDNA
+```bash
+mawk '$1 ~ /NC_007175.2/' ref_C_virginica-3.0_top.bed > mtDNA.bed
 ## RNA trimming and custom adapter removal
 
 `cd $WORKING_DIR/RNA`
@@ -253,10 +257,14 @@ samtools view -@32 -h -F 0x100 -q 10 -F 0x400 ECI_2-RGmd.bam | mawk '$6 !~/[8-9]
 
 ## Generate data in Table 2
 
-The % of duplicate reads can be found in the md.\*.log files
-
 ```bash
 for i in `cat namelist`; do nom=$(samtools view -@32 $i.F.bam -c -L mtDNA.bed); denom=$(samtools view -@32 $i.F.bam -c); dup=$(mawk '/Unknown/' "$i"_dup_metrics.txt | cut -f9); paste <(echo $i) <(echo $(( `zcat $i.F.fq.gz | wc -l` /2 ))) <(echo $(( `zcat $i.R1a.fq.gz | wc -l` /2 ))) <(samtools view -@ 32 $i-RG.bam -c) <(python -c "print(round("$dup" * 100,2))") <(echo $denom) <(python -c "print(round("$nom"/"$denom" *100,2))"); done > data.table2
 echo -e "Pool\tRaw_Reads\tFiltered_Reads\tMapped_Reads\t%_Duplicate\tFiltered_Mapped_Reads\t%_mapping_to_mitochondrial_genome" > header
 cat header data.table2 > table2.txt
 ```
+
+## Generate data for Figure 3
+
+Merge 
+```bash
+samtools merge -@64 filter.merged.bam ECI_1.F.bam ECI_2.F.bam ECI_3.F.bam ECI_4.F.bam ECI_7.F.bam ECI_12.F.bam
