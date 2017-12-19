@@ -87,6 +87,8 @@ Run dDocent to trim files
 
 `./dDocent RNA.config`
 
+## RNA mapping to the genome
+
 #### The next steps require STAR (https://github.com/alexdobin/STAR) to be installed 
 ```bash
 ln -s $WORKING_DIR/Genome/Assembled_chromosomes/seq/virginica.ref3.0.fasta reference.fasta
@@ -118,6 +120,9 @@ Use samtools and mawk to filter out reads that did not uniquely map and reads th
 ```bash
 samtools view -@64 -q4 -h -F 0x100 -F 0x400 m4.merged.bam| mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/' | samtools view -b > m4.q4.merged.bam
 ```
+
+## Probe/RNA Coverage Analysis
+
 Create symlinks to all bed files and the bedtools genome file
 ```bash
 ln -s $WORKING_DIR/Genome/GFF/*.bed .
@@ -130,7 +135,7 @@ paste <(samtools view -@32 -c m4.q4.merged.bam) <(samtools view -@32 -c -L sorte
 Output:
 
 `21990025	17234677	12059266`
-## Probe/RNA Coverage Analysis
+
 Use bedtools to calculate per base pair coverage levels across various genomic regions
 ```bash
 bedtools coverage -hist -b m4.q4.merged.bam -a cv.ref3.intron.bed -g genome.file -sorted  -split | grep ^all > AllRNAm4q4.hist.AllIntron.all.split.txt
