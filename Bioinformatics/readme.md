@@ -730,7 +730,7 @@ export -f spec50X
 ```
 Now we use all the functions to create a table
 ```bash
-echo -e "Pool\t%_in_Exons\t%_Near_Exons\t%Off_Target_Exons\t%_on_Target35X\t%_Near_Target35X\t%Off_Target35X\t%_on_Target20X\t%_Near_Target20X\t%Off_Target20X\t%_on_Target50X\t%_Near_Target50X\t%Off_Target50X" > Spec.Table
+echo -e "Pool\t%_in_Exons\t%_Near_Exons\t%Off_Target_Exons\t\t%_on_Target35X\t%_Near_Target35X\t%Off_Target35X\t\t%_on_Target20X\t%_Near_Target20X\t%Off_Target20X\t\t%_on_Target50X\t%_Near_Target50X\t%Off_Target50X" > Spec.Table
 
 paste <(specExon ECI_2) <(spec35X ECI_2) <(spec20X ECI_2) <(spec50X ECI_2) >> Spec.Table
 paste <(specExon ECI_4) <(spec35X ECI_4) <(spec20X ECI_4) <(spec50X ECI_4) >> Spec.Table
@@ -741,13 +741,13 @@ paste <(specExon ECI_12) <(spec35X ECI_12) <(spec20X ECI_12) <(spec50X ECI_12) >
 ```
 `cat Spec.Table`
 ```bash
-Pool	%_in_Exons	%_Near_Exons	%Off_Target_Exons	%_on_Target35X	%_Near_Target35X	%Off_Target35X	%_on_Target20X	%_Near_Target20X	%Off_Target20X	%_on_Target50X	%_Near_Target50X	%Off_Target50X
+Pool	%_in_Exons	%_Near_Exons	%Off_Target_Exons		%_on_Target35X	%_Near_Target35X	%Off_Target35X		%_on_Target20X	%_Near_Target20X	%Off_Target20X		%_on_Target50X	%_Near_Target50X	%Off_Target50X
 ECI_2	49.1%	6.7%	44.2%		37.9%	3.5%	58.6%		42.3%	4.3%	53.3%		34.3%	3.0%	62.7%	
 ECI_4	43.6%	6.9%	49.5%		33.3%	3.5%	63.1%		37.4%	4.4%	58.2%		30.1%	3.0%	67.0%	
 ECI_7	48.6%	6.7%	44.6%		38.1%	3.6%	58.3%		42.3%	4.4%	53.2%		34.6%	3.1%	62.3%	
 ECI_1	45.2%	7.2%	47.6%		34.5%	3.5%	62.0%		38.6%	4.4%	57.0%		31.2%	3.0%	65.9%	
 ECI_3	48.8%	6.7%	44.5%		37.9%	3.6%	58.6%		42.3%	4.3%	53.4%		34.3%	3.0%	62.7%	
-ECI_12	51.8%	6.6%	41.6%		40.7%	3.6%	55.7%		45.3%	4.4%	50.3%		36.9%	3.1%	60.0%	
+ECI_12	51.8%	6.6%	41.6%		40.7%	3.6%	55.7%		45.3%	4.4%	50.3%		36.9%	3.1%	60.0%
 ```
 
 
