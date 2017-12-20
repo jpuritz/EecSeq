@@ -458,3 +458,196 @@ Now with this function we can use `paste` and subshells to produce the table
 paste <(echo -e "Targets\nAll Exons\n20XR Exons\n35XR Exons\n50XR Exons") <(counts_per_target10 ECI_2) <(counts_per_target10 ECI_4) <(counts_per_target10 ECI_7) <(counts_per_target10 ECI_1) <(counts_per_target10 ECI_3) <(counts_per_target10 ECI_12) > SupTable5.txt
 ```
 
+`cat SupTable5.txt`
+
+```bash
+Targets	ECI_2	ECI_4	ECI_7	ECI_1	ECI_3	ECI_12
+All Exons	61.3%	54.4%	54.8%	55.1%	61.1%	56.7%
+20XR Exons	98.5%	97.2%	97.5%	97.1%	98.4%	97.9%
+35XR Exons	99.2%	98.8%	98.9%	98.7%	99.1%	99.0%
+50XR Exons	99.4%	99.1%	99.2%	99.1%	99.3%	99.2%
+```
+
+## Generate data for Figure 4
+
+Figure 4 is per bp sensitivity looking at coverage across our target sets, near targets (definied as 150 bp around the edge of targets, and off target (everything that is not near or on target).
+
+First steps involve creating our different interval sets using bedtools.
+
+```bash
+bedtools flank -i m4q4.EiRc35.bed -b 150 -g genome.file | bedtools sort -faidx genome.file >  m4q4.EiRc35.neartarget.bed 
+bedtools slop -i m4q4.EiRc35.bed -b 150 -g genome.file > m4q4.EiRc35.slop.bed 
+bedtools complement -i m4q4.EiRc35.slop.bed -g genome.file > m4q4.EiRc35.offtarget.bed 
+
+bedtools flank -i m4q4.EiRc20.bed -b 150 -g genome.file | bedtools sort -faidx genome.file >  m4q4.EiRc20.neartarget.bed 
+bedtools slop -i m4q4.EiRc20.bed -b 150 -g genome.file > m4q4.EiRc20.slop.bed 
+bedtools complement -i m4q4.EiRc20.slop.bed -g genome.file > m4q4.EiRc20.offtarget.bed 
+
+bedtools flank -i m4q4.EiRc50.bed -b 150 -g genome.file | bedtools sort -faidx genome.file >  m4q4.EiRc50.neartarget.bed
+bedtools slop -i m4q4.EiRc50.bed -b 150 -g genome.file > m4q4.EiRc50.slop.bed
+bedtools complement -i m4q4.EiRc50.slop.bed -g genome.file > m4q4.EiRc50.offtarget.bed
+```
+With the target sets defined we again use bedtools to caculate coverage levels across these various genomic regions, and below we use GNU-parallel to speed things up.
+
+```bash
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc35.neartarget.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc35neartarget.all.txt' 
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc35.offtarget.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc35nofftarget.all.txt' 
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc35.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc35.all.txt' 
+
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc20.neartarget.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc20neartarget.all.txt' 
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc20.offtarget.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc20nofftarget.all.txt' 
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc20.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc20.all.txt' 
+
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc50.neartarget.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc50neartarget.all.txt' 
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc50.offtarget.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc50nofftarget.all.txt' 
+ls *F.bam | sed 's/.F.bam//g' | parallel 'bedtools coverage -hist -b {}.F.bam -a m4q4.EiRc50.bed -sorted -g genome.file  | grep ^all > {}.hist.EiRc50.all.txt' 
+```
+## R code to generate Figure 4
+
+```R
+library(ggplot2)
+library(grid)
+library(plyr)
+library(dplyr)
+library(scales)
+library(zoo)
+
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+make_graph= function(j){
+  j1 <- gsub("ECI", "EC", j, ignore.case=FALSE, fixed=FALSE)
+  print(files <- list.files(pattern=paste(j,".hist.*EiRc35*", sep = "")))
+  labs <- c("On target","Near target", "Off target")
+  
+  cov <- list()
+  for (i in 1:length(files)) {
+    cov[[i]] <- read.table(files[i])[,c(2,5)]
+    cov_cumul=1-cumsum(cov[[i]][,2])
+    cov[[i]]$cov_cumul <- c(1,cov_cumul[-length(cov_cumul)])
+    cov[[i]]$sample=labs[i]
+  }
+  
+  cov_df=do.call("rbind",cov)
+  names(cov_df)[1:2]=c("depth","fraction")
+  
+  print(files <- list.files(pattern=paste(j,".hist.*EiRc20*", sep = "")))
+  cov2 <- list()
+  for (i in 1:length(files)) {
+    cov2[[i]] <- read.table(files[i])[,c(2,5)]
+    cov_cumul2=1-cumsum(cov2[[i]][,2])
+    cov2[[i]]$cov_cumul <- c(1,cov_cumul2[-length(cov_cumul2)])
+    cov2[[i]]$sample=labs[i]
+  }
+  cov2_df=do.call("rbind",cov2)
+  names(cov2_df)[1:2]=c("depth","fraction")
+  
+  print(files <- list.files(pattern=paste(j,".hist.*EiRc50*", sep = "")))
+  
+  cov3 <- list()
+  for (i in 1:length(files)) {
+    cov3[[i]] <- read.table(files[i])[,c(2,5)]
+    cov_cumul3=1-cumsum(cov3[[i]][,2])
+    cov3[[i]]$cov_cumul <- c(1,cov_cumul3[-length(cov_cumul3)])
+    cov3[[i]]$sample=labs[i]
+  }
+  cov3_df=do.call("rbind",cov3)
+  names(cov3_df)[1:2]=c("depth","fraction")
+  
+  cov_df <- subset(cov_df, depth <101)
+  cov2_df <- subset(cov2_df, depth <101)
+  cov3_df <- subset(cov3_df, depth <101)
+  
+  cov2_df$high <-cov3_df$cov_cumul
+  
+  cbPalette <- c("#D55E00", "#009E73", "#56B4E9" ,"#0072B2" ,"#E69F00" ,"#F0E442" ,"#999999" ,"#CC79A7")
+  cbPalettep <- c("#0072B2", "#009E73","#D55E00" )
+  
+  cov_df$sample <- factor(cov_df$sample,levels=c("On target","Near target", "Off target"))
+  cov2_df$sample <- factor(cov2_df$sample,levels=c("On target","Near target", "Off target"))
+  
+  p <- ggplot(cov_df, aes(x= depth, y=cov_cumul, color=sample))  +
+    #xlim(0,200)+
+    geom_ribbon(data=cov2_df,aes(ymin=cov_cumul,ymax=high, color=sample, fill=sample, alpha=0.4)) +
+    scale_alpha(guide = 'none') +
+    geom_line(size=1.5)+ 
+    scale_color_manual(values=cbPalettep) +
+    scale_fill_manual(values=cbPalettep) +
+    ylab("% of Target Bases > Depth")+
+    #scale_x_log10()+
+    xlab("Depth")+
+    ggtitle(eval(j1)) +
+    theme_bw() +
+    theme(plot.title = element_text(size = 10, face = "bold",hjust = 0.5)) +
+    theme(legend.title = element_blank()) +
+    theme(legend.position="none")
+  #theme(legend.position=c(0.92,0.88))
+  
+  return(p)
+}
+
+sample_names=c("ECI_2","ECI_4","ECI_7","ECI_1","ECI_3","ECI_12")
+
+ECI_2 <- make_graph(sample_names[1])
+
+ECI_4 <- make_graph(sample_names[2])
+ECI_4 <- ECI_4 + theme(axis.title.y=element_text(color="transparent"))
+
+ECI_7 <- make_graph(sample_names[3])
+ECI_7 <- ECI_7 + theme(axis.title.y=element_text(color="transparent"))
+
+ECI_1 <- make_graph(sample_names[4])
+
+ECI_3 <- make_graph(sample_names[5])
+ECI_3 <- ECI_3 + theme(axis.title.y=element_text(color="transparent"))
+
+ECI_12 <- make_graph(sample_names[6])
+ECI_12 <- ECI_12 + theme(axis.title.y=element_text(color="transparent"))
+
+
+
+pdf(file="Figure4.pdf",width=14, height=6.5, bg="transparent")
+multiplot(ECI_2,ECI_1,ECI_4,ECI_3,ECI_7,ECI_12, cols=3)
+
+dev.off()
+
+pdf(file="Figure4Legend.pdf",width=14, height=6.5, bg="transparent")
+
+ECI_4 <- ECI_4 + theme(legend.position="bottom")
+ECI_4
+dev.off()
+```
+
