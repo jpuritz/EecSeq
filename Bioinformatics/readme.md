@@ -408,5 +408,53 @@ Now with this function we can use `paste` and subshells to produce the table
 ```bash
 paste <(echo -e "Targets\nAll Exons\n20XR Exons\n35XR Exons\n50XR Exons") <(counts_per_target ECI_2) <(counts_per_target ECI_4) <(counts_per_target ECI_7) <(counts_per_target ECI_1) <(counts_per_target ECI_3) <(counts_per_target ECI_12) > Table3.txt
 ```
+View the results:
 
+`cat Table3`
+```bash
+Targets	ECI_2	ECI_4	ECI_7	ECI_1	ECI_3	ECI_12
+All Exons	88.0%	86.0%	85.8%	86.5%	87.9%	86.4%
+20XR Exons	99.5%	99.4%	99.4%	99.4%	99.5%	99.4%
+35XR Exons	99.6%	99.6%	99.6%	99.6%	99.6%	99.6%
+50XR Exons	99.7%	99.7%	99.7%	99.7%	99.7%	99.7%
+```
+
+### Calculating data for supplemental table 5
+
+This is effectively the same as table 3 with a simple change to the coverage variable
+
+```bash
+counts_per_target10(){
+
+#Calculate number of exons with more than 1X coverage
+EXONC=$(bedtools coverage -b $1.F.bam -a sorted.ref3.0.exon.sc.bed -counts -sorted -g genome.file | mawk '$4 > 9' | wc -l) 
+#Calculate number of 35X targets with more than 1X coverage
+X35XC=$(bedtools coverage -b $1.F.bam -a m4q4.EiRc35.bed -counts -sorted -g genome.file | mawk '$4 > 9' | wc -l) 
+#Calculate number of 20X targets with more than 1X coverage
+X20XC=$(bedtools coverage -b $1.F.bam -a m4q4.EiRc20.bed -counts -sorted -g genome.file | mawk '$4 > 9' | wc -l) 
+#Calculate number of 50X targets with more than 1X coverage
+X50XC=$(bedtools coverage -b $1.F.bam -a m4q4.EiRc50.bed -counts -sorted -g genome.file | mawk '$4 > 9' | wc -l) 
+
+#Calculate the total number of targets for each set
+EXON=$(cat sorted.ref3.0.exon.sc.bed | wc -l )
+X35X=$(cat m4q4.EiRc35.bed | wc -l)
+X20X=$(cat m4q4.EiRc20.bed | wc -l)
+X50X=$(cat m4q4.EiRc50.bed | wc -l)
+
+#Print results in pretty percentages
+echo $1
+echo `python -c "print(round("$EXONC"/"$EXON" * 100,1))"`"%"
+echo `python -c "print(round("$X20XC"/"$X20X" * 100,1))"`"%"
+echo `python -c "print(round("$X35XC"/"$X35X" * 100,1))"`"%"
+echo `python -c "print(round("$X50XC"/"$X50X" * 100,1))"`"%"
+  
+}
+
+export -f counts_per_target10
+```
+
+Now with this function we can use `paste` and subshells to produce the table
+```bash
+paste <(echo -e "Targets\nAll Exons\n20XR Exons\n35XR Exons\n50XR Exons") <(counts_per_target10 ECI_2) <(counts_per_target10 ECI_4) <(counts_per_target10 ECI_7) <(counts_per_target10 ECI_1) <(counts_per_target10 ECI_3) <(counts_per_target10 ECI_12) > SupTable5.txt
+```
 
