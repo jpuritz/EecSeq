@@ -356,6 +356,57 @@ png(filename="Figure3.png", type="cairo",units="px", width=5600,
     height=3000, res=600, bg="transparent")
 b
 dev.off()  
+```
+## Calculating Sensitivity
 
+First, we need to return to the RNA folder
+```bash
+cd $WORKING_DIR/RNA
+```
+Next step is to find exons with minimum thresholds of RNA coverage.  These will be our "target" sets along with confidence intervals.  Based on overal RNA coverage, we chose 35X as our "target" set and choose 15X boundaries around that number for confidence intervals.  We will create three `bed` files from our RNA exon coverage stats.
+
+```bash
+mawk 'BEGIN { FS = "\t" } ; $11 > 19' $WORKING_DIR/RNA/cov.m4q4.EiR.stats > m4q4.EiRc20.bed
+mawk 'BEGIN { FS = "\t" } ; $11 > 49' $WORKING_DIR/RNA/cov.m4q4.EiR.stats > m4q4.EiRc50.bed
+mawk 'BEGIN { FS = "\t" } ; $11 > 34' $WORKING_DIR/RNA/cov.m4q4.EiR.stats > m4q4.EiRc35.bed
+```
+### Calculating data for table 3
+
+We will use a BASH function to automate this for us:
+
+```bash
+counts_per_target(){
+
+#Calculate number of exons with more than 1X coverage
+EXONC=$(bedtools coverage -b $1.F.bam -a sorted.ref3.0.exon.sc.bed -counts -sorted -g genome.file | mawk '$4 > 0' | wc -l) 
+#Calculate number of 35X targets with more than 1X coverage
+X35XC=$(bedtools coverage -b $1.F.bam -a m4q4.EiRc35.bed -counts -sorted -g genome.file | mawk '$4 > 0' | wc -l) 
+#Calculate number of 20X targets with more than 1X coverage
+X20XC=$(bedtools coverage -b $1.F.bam -a m4q4.EiRc20.bed -counts -sorted -g genome.file | mawk '$4 > 0' | wc -l) 
+#Calculate number of 50X targets with more than 1X coverage
+X50XC=$(bedtools coverage -b $1.F.bam -a m4q4.EiRc50.bed -counts -sorted -g genome.file | mawk '$4 > 0' | wc -l) 
+
+#Calculate the total number of targets for each set
+EXON=$(cat sorted.ref3.0.exon.sc.bed | wc -l )
+X35X=$(cat m4q4.EiRc35.bed | wc -l)
+X20X=$(cat m4q4.EiRc20.bed | wc -l)
+X50X=$(cat m4q4.EiRc50.bed | wc -l)
+
+#Print results in pretty percentages
+echo $1
+echo `python -c "print(round("$EXONC"/"$EXON" * 100,1))"`"%"
+echo `python -c "print(round("$X20XC"/"$X20X" * 100,1))"`"%"
+echo `python -c "print(round("$X35XC"/"$X35X" * 100,1))"`"%"
+echo `python -c "print(round("$X50XC"/"$X50X" * 100,1))"`"%"
+  
+}
+
+export -f counts_per_target
+```
+
+Now with this function we can use `paste` and subshells to produce the table
+```bash
+paste <(echo -e "Targets\nAll Exons\n20XR Exons\n35XR Exons\n50XR Exons") <(counts_per_target ECI_2) <(counts_per_target ECI_4) <(counts_per_target ECI_7) <(counts_per_target ECI_1) <(counts_per_target ECI_3) <(counts_per_target ECI_12) > Table3.txt
+```
 
 
