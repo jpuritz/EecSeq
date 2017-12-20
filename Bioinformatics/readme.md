@@ -750,6 +750,170 @@ ECI_3	48.8%	6.7%	44.5%		37.9%	3.6%	58.6%		42.3%	4.3%	53.4%		34.3%	3.0%	62.7%
 ECI_12	51.8%	6.6%	41.6%		40.7%	3.6%	55.7%		45.3%	4.4%	50.3%		36.9%	3.1%	60.0%
 ```
 
+## Generating data for Figure 5
+
+First, we need to break up exons into size classes.
+
+```bash
+mawk '$3 - $2 > 59' sorted.ref3.0.exon.sc.bed | mawk '$3 - $2 < 181' > exon_bin60to180.bed
+mawk '$3 - $2 > 180' sorted.ref3.0.exon.sc.bed | mawk '$3 - $2 < 241' > exon_bin180to240.bed
+mawk '$3 - $2 > 240' sorted.ref3.0.exon.sc.bed | mawk '$3 - $2 < 421' > exon_bin240to420.bed
+mawk '$3 - $2 > 420' sorted.ref3.0.exon.sc.bed | mawk '$3 - $2 < 541' > exon_bin420to540.bed
+```
+Next, we use bedtools to divide each exon size class into discrete windows and remove mtDNA.
+```bash
+bedtools makewindows -b exon_bin60to180.bed -w 10 -i srcwinnum | mawk '$1 !~ /NC_007175.2/' > exon_bin60to180b10.bed 
+bedtools makewindows -b exon_bin180to240.bed -w 15 -i srcwinnum| mawk '$1 !~ /NC_007175.2/' > exon_bin180to240b15.bed 
+bedtools makewindows -b exon_bin240to420.bed -w 28 -i srcwinnum| mawk '$1 !~ /NC_007175.2/' > exon_bin240to420b28.bed 
+bedtools makewindows -b exon_bin420to540.bed -w 30 -i srcwinnum| mawk '$1 !~ /NC_007175.2/' > exon_bin420to540b30.bed 
+```
+
+The next step is to use bedtools to calculate coverage across these descrete windows.
+```bash
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin60to180b10.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin60to180b10.cov &
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin180to240b15.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin180to240b15.cov &
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin240to420b28.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin240to420b28.cov &
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin420to540b30.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin420to540b30.cov 
+```
+
+Finally, the bin numbering won't sort properly in R, so this short script will substitute the proper number
+`echo sed.sh`
+
+```bash
+!#/bin/bash
+
+sed 's/_1\t/_01\t/g' $1 | sed 's/_2\t/_02\t/g' | sed 's/_3\t/_03\t/g' | sed 's/_4\t/_04\t/g' | sed 's/_5\t/_05\t/g' | sed 's/_6\t/_06\t/g' | sed 's/_7\t/_07\t/g' | sed 's/_8\t/_08\t/g' | sed 's/_9\t/_09\t/g' > $1.1
+mv $1.1 $1
+```
+```bash
+ls Allcap.mean.exon_bin*b*.cov | parallel bash sed.sh {}
+```
+## R code for Figure 5
+```R
+library(ggplot2)
+library(grid)
+library(plyr)
+library(dplyr)
+library(scales)
+#library(tidyquant)
+library(zoo)
+
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+
+Exon60to180 <- read.table("Allcap.mean.exon_bin60to180b10.cov", header = TRUE)
+
+Exon60to180 <- as.data.frame(Exon60to180)
+#Exon60to180$Depth <- Exon60to180$Depth/6
+
+
+f <- function(x) {
+  ans <- boxplot.stats(x)
+  data.frame(ymin = ans$conf[1], ymax = ans$conf[2])
+}
+
+
+plot1<- ggplot(Exon60to180, aes(x=Bin, y=Depth)) + 
+  stat_summary(fun.y="median", geom="bar", fill=cbPalette[1], alpha=0.9) +
+  stat_summary(fun.data = f, geom = "errorbar") +
+  theme_classic() +
+  ylab("Median Coverage") +
+  xlab("10 bp Windows Across Exons 60bp - 180bp in Length")+
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
+  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+
+
+Exon180to240 <- read.table("Allcap.mean.exon_bin180to240b15.cov", header = TRUE)
+
+Exon180to240 <- as.data.frame(Exon180to240)
+#Exon180to240$Depth <- Exon180to240$Depth/6
+
+
+plot2<- ggplot(Exon180to240, aes(x=Bin, y=Depth)) + 
+  stat_summary(fun.y="median", geom="bar", fill=cbPalette[2], alpha=0.9) +
+  stat_summary(fun.data = f, geom = "errorbar") +
+  #geom_abline(intercept = mean(Exon180to240$Depth), slope =0) +
+  #scale_y_continuous(expand = c(0,0))+
+  theme_classic() +
+  ylab("Median Coverage") +
+  xlab("15 bp Windows Across Exons 180bp - 240bp in Length")+
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
+  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+
+Exon240to420 <- read.table("Allcap.mean.exon_bin240to420b28.cov", header = TRUE)
+
+Exon240to420 <- as.data.frame(Exon240to420)
+#Exon240to420$Depth <- Exon240to420$Depth/6
+
+
+plot3<- ggplot(Exon240to420, aes(x=Bin, y=Depth)) + 
+  stat_summary(fun.y="median", geom="bar", fill=cbPalette[4], alpha=0.9) +
+  stat_summary(fun.data = f, geom = "errorbar") +
+  #geom_abline(intercept = mean(Exon240to420$Depth), slope =0) +
+  #scale_y_continuous(expand = c(0,0))+
+  theme_classic() +
+  ylab("Median Coverage") +
+  xlab("28 bp Windows Across Exons 240bp - 420bp in Length")+
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
+  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+
+Exon420to540 <- read.table("Allcap.mean.exon_bin420to540b30.cov", header = TRUE)
+
+Exon420to540 <- as.data.frame(Exon420to540)
+#Exon420to540$Depth <- Exon420to540$Depth/6
+
+
+plot4<- ggplot(Exon420to540, aes(x=Bin, y=Depth)) + 
+  stat_summary(fun.y="median", geom="bar", fill=cbPalette[5], alpha=0.9) +
+  stat_summary(fun.data = f, geom = "errorbar") +
+  #geom_abline(intercept = mean(Exon420to540$Depth), slope =0,linetype=dash) +
+  #scale_y_continuous(expand = c(0,0))+
+  theme_classic() +
+  ylab("Median Coverage") +
+  xlab("30 bp Windows Across Exons 420bp - 540bp in Length")+
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
+  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+
+
+png(filename="Figure5.png", type="cairo",units="px", width=5600, 
+    height=3000, res=600, bg="transparent")
+multiplot(plot1, plot3,plot2,plot4, cols=2)
+dev.off()
+```
 
 
 
