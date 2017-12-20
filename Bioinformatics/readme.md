@@ -347,15 +347,15 @@ b <- ggplot(TotalExon, aes(x=RNA_Coverage+1,y=DNA_Coverage+1,alpha = 1/(density)
                 labels = c("0","0","10","100","1,000","10,000","100,000"))+
   scale_y_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),
                 labels = c("0","0","10","100","1,000","10,000","100,000"))+
-  xlab("Total RNA Depth per Exon")+
-  ylab("Total Capture Depth per Exon") +
+  xlab("Total Number of RNA Reads per Exon")+
+  ylab("Total Number of DNA Reads per Exon") +
   theme_bw() +
   theme(legend.position = c(0.85,0.25)) 
 
 png(filename="Figure3.png", type="cairo",units="px", width=5600, 
     height=3000, res=600, bg="transparent")
 b
-dev.off()  
+dev.off()    
 ```
 ## Calculating Sensitivity
 
