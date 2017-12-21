@@ -991,61 +991,28 @@ TotalExon$density2 <- TotalExon$density2 +0.000001
 
 
 gc1 <- ggplot(data=TotalExon[which(TotalExon$Exon_Size_Class=="Middle 80%"),], aes(x=GC_Content,y=DNA_Coverage/6+1)) + 
-  #b <- ggplot(TotalExon,aes(x=RNA+1,y=TotalCap+1, alpha = 1/(density)))+
-  #geom_abline(intercept =0, slope =1) +
-  #geom_point(alpha =0.1) +
-  #geom_hex(aes(group=TotalExon$Class),binwidth = c(.1, 500))+
   geom_point(color=cbPalette[2],fill=cbPalette[2],shape=15, alpha=0.1)+
-  #scale_alpha_continuous(guide = "none",range = c(.05, .5)) + 
-  #geom_point(data=TotalExon[which(TotalExon$Class=="Lower"),], color=cbPalette[1],fill=cbPalette[1],shape=16)+
-  #geom_point(data=TotalExon[which(TotalExon$Class=="Upper"),], color=cbPalette[3],fill=cbPalette[3],shape=17)+
   xlim(0,1)+
-  #scale_x_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),labels = c("0","0","10","100","1,000","10,000","100,000"))+
+c("0","0","10","100","1,000","10,000","100,000"))+
   scale_y_log10(limits=c(1,30000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000),labels = c("0","0","10","100","1,000","10,000"))+
-  #scale_x_continuous(limits=c(1,200000),trans = log_trans()) +
-  #scale_y_continuous(limits=c(1,200000),trans = log_trans()) +
-  #scale_y_continuous(limits=c(0,1000)) +
-  #coord_trans(x = "log10", y = "log10")+
   xlab("% of GC Content")+
   ylab("Mean Capture Depth") +
   theme_bw() +
   theme(legend.position = c(0.85,0.25)) 
 gc2 <- ggplot(TotalExon, aes(x=GC_Content,y=DNA_Coverage/6+1)) + 
-  #b <- ggplot(TotalExon,aes(x=RNA+1,y=TotalCap+1, alpha = 1/(density)))+
-  #geom_abline(intercept =0, slope =1) +
-  #geom_point(alpha =0.1) +
-  #geom_hex(aes(group=TotalExon$Class),binwidth = c(.1, 500))+
-  #geom_point(data=TotalExon[which(TotalExon$Class=="Inner"),], color=cbPalette[2],fill=cbPalette[2],shape=15)+
-  #scale_alpha_continuous(guide = "none",range = c(.05, .5)) + 
   geom_point(data=TotalExon[which(TotalExon$Exon_Size_Class=="Lower 10%"),], color=cbPalette[1],fill=cbPalette[1],shape=16, alpha=0.1)+
-  #geom_point(data=TotalExon[which(TotalExon$Class=="Upper"),], color=cbPalette[3],fill=cbPalette[3],shape=17)+
-  xlim(0,1)+
-  #scale_x_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),labels = c("0","0","10","100","1,000","10,000","100,000"))+
+   xlim(0,1)+
+c("0","0","10","100","1,000","10,000","100,000"))+
   scale_y_log10(limits=c(1,30000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000),labels = c("0","0","10","100","1,000","10,000"))+
-  #scale_x_continuous(limits=c(1,200000),trans = log_trans()) +
-  #scale_y_continuous(limits=c(1,200000),trans = log_trans()) +
-  #scale_y_continuous(limits=c(0,1000)) +
-  #coord_trans(x = "log10", y = "log10")+
   xlab("% of GC Content")+
   ylab("Mean Capture Depth") +
   theme_bw() +
   theme(legend.position = c(0.85,0.25)) 
 gc3 <- ggplot(TotalExon, aes(x=GC_Content,y=DNA_Coverage/6+1)) + 
-  #b <- ggplot(TotalExon,aes(x=RNA+1,y=TotalCap+1, alpha = 1/(density)))+
-  #geom_abline(intercept =0, slope =1) +
-  #geom_point(alpha =0.1) +
-  #geom_hex(aes(group=TotalExon$Class),binwidth = c(.1, 500))+
-  #geom_point(data=TotalExon[which(TotalExon$Class=="Inner"),], color=cbPalette[2],fill=cbPalette[2],shape=15)+
-  #scale_alpha_continuous(guide = "none",range = c(.05, .5)) + 
   xlim(0,1)+
-  #geom_point(data=TotalExon[which(TotalExon$Class=="Lower"),], color=cbPalette[1],fill=cbPalette[1],shape=16)+
   geom_point(data=TotalExon[which(TotalExon$Exon_Size_Class=="Upper 10%"),], color=cbPalette[3],fill=cbPalette[3],shape=17, alpha=0.1)+
   #scale_x_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),labels = c("0","0","10","100","1,000","10,000","100,000"))+
   scale_y_log10(limits=c(1,30000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000),labels = c("0","0","10","100","1,000","10,000"))+
-  #scale_x_continuous(limits=c(1,200000),trans = log_trans()) +
-  #scale_y_continuous(limits=c(1,200000),trans = log_trans()) +
-  #scale_y_continuous(limits=c(0,1000)) +
-  #coord_trans(x = "log10", y = "log10")+
   xlab("% of GC Content")+
   ylab("Mean Capture Depth") +
   theme_bw() +
@@ -1056,6 +1023,7 @@ png(filename="Figure6.png", type="cairo",units="px", width=5600,
 multiplot(gc2,gc1,gc3,cols=3)
 dev.off() 
 ```
+
 
 
 
