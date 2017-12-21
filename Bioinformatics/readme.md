@@ -1260,3 +1260,79 @@ png(filename="Figure7.png", type="cairo",units="px", width=5600,
 dd
 dev.off()
 ```
+## Code for SNP calling and statistics
+First, use dDocent_ngs to call raw variants
+```bash
+wget https://raw.githubusercontent.com/jpuritz/EecSeq/master/Bioinformatics/SNPConfig
+bash ./dDocent_ngs.sh SNPConfig
+```
+Next decompose raw variants into SNPs and InDel calls
+```bash
+vcfallelicprimitives TotalRawSNPs.vcf --keep-info --keep-geno > decomp.raw.vcf
+```
+Next, remove InDel calls
+```bash
+mawk '$0 ~ /#/ || $0 ~ /TYPE\=snp/' decomp.raw.vcf > snp.raw.vcf
+```
+Next, filter using VCFtools to generate stats
+
+Total SNPs: `vcftools --vcf snp.raw.vcf `
+Total SNPs with quality score higher than 20: `vcftools --vcf snp.raw.vcf --minQ 20`
+Total Exome SNPS: `vcftools --vcf snp.raw.vcf --bed sorted.ref3.0.exon.sc.bed --minQ 20`
+Exome SNPs with minimum mean 16X coverage: `vcftools --vcf snp.raw.vcf --minQ 20 --bed sorted.ref3.0.exon.sc.bed --min-meanDP 16`
+Exome SNPs with minimum mean 32X coverage: `vcftools --vcf snp.raw.vcf --minQ 20  --bed sorted.ref3.0.exon.sc.bed --min-meanDP 32`
+Exome SNPs with minimum mean 48X coverage: `vcftools --vcf snp.raw.vcf --minQ 20  --bed sorted.ref3.0.exon.sc.bed --min-meanDP 48`
+Exome SNPs with minimum mean 80X coverage: `vcftools --vcf snp.raw.vcf --minQ 20  --bed sorted.ref3.0.exon.sc.bed --min-meanDP 80`
+SNPs with minimum mean 80X coverage outside of exome: `vcftools --vcf snp.raw.vcf --minQ 20  --exclude-bed sorted.ref3.0.exon.sc.bed --min-meanDP 80`
+
+
+## Code for analysis of hyRAD-X
+
+Change to GFF directory
+
+`cd $WORKING_DIR/Genome/GFF`
+
+Get mRNA intervals
+
+`mawk '$8 == "mRNA"' ref_C_virginica-3.0_top.bed > ref3.0_mRNA.bed`
+
+Take only 1 transcript variant per mRNA
+
+`bedtools merge -i ref3.0_mRNA.bed  -c 10 -o "first" | mawk '{ print $1"\t"$2"\t"$3"\tmRNA="NR}'  > ref3.0_mRNA.sc.bed`
+
+Remove introns from bed file and then convert into fasta format
+```bash
+bedtools subtract -a ref3.0_mRNA.sc.bed -b cv.ref3.intron.sc.bed > ref3.0_mRNA_nointrons.bed
+bedtools getfasta -name -tab -fi ~/j.puritz_remote/EecSeq2/reference.fasta -bed ref3.0_mRNA_nointrons.bed | sed 's/::.*\t/\t/g' | mawk 'BEGIN {m=0;seq=0} {if ($1 == m) seq= seq$2;else if ($1 != m) {print ">"m; print seq; m=$1; seq = $2}}' | mawk '!/>0/ && !/^0/' > mRNA.nointrons.fasta
+```
+Count number of mRNAs and the number of mRNAs with two restriction sites
+```bash
+mawk '/>/' mRNA.nointrons.fasta | wc -l
+grep "TTAA.*TTAA" mRNA.nointrons.fasta | wc -l
+```
+Result:
+```bash
+31383
+29555
+```
+### R code for SimRAD
+```R
+source("https://bioconductor.org/biocLite.R")
+biocLite("ShortRead")
+library(SimRAD)
+
+RE1_1 <- "T"
+RE1_2 <- "TAA"
+RE2_1 <- "T"
+RE2_2 <- "TAA"
+
+transcripts <- ref.DNAseq("mRNA.nointrons.fasta", subselect.contigs = FALSE)
+digest <-insilico.digest(transcripts,RE1_1,RE1_2,RE2_1,RE2_2, verbose=TRUE)
+adapters <- adapt.select(digest, type= "AB",RE1_1,RE1_2,RE2_1,RE2_2)
+wid.digest.adapt <- size.select(adapters, min.size = 100, max.size = 100000, graph=TRUE, verbose=TRUE)
+```
+Results:
+```R
+Number of type AA fragments:440881
+220184 fragments between 100 and 1e+05 bp 
+```
