@@ -1024,7 +1024,40 @@ multiplot(gc2,gc1,gc3,cols=3)
 dev.off() 
 ```
 
+## Comparing coverage in CDS and UTR in exons with both
 
+First we can find UTRs by subtracting CDS from exons using bedtools.
+```bash
+bedtools subtract -a sorted.ref3.0.exon.bed -b sorted.ref3.0.CDS.bed -g genome.file -sorted > sorted.ref3.0.UTR.bed
+bedtools merge -i sorted.ref3.0.UTR.bed > sorted.ref3.0.UTR.sc.bed
+```
+Next step is to find exons that have CDS and UTR.
+```bash
+bedtools intersect -a sorted.ref3.0.exon.sc.bed -b sorted.ref3.0.UTR.sc.bed -wa > sort.ref3.0.exonwithUTR.sc.bed
+bedtools intersect -a sort.ref3.0.exonwithUTR.sc.bed -b sorted.ref3.0.CDS.sc.bed -wa > sort.ref3.0.exonwithbothUTRandCDS.bed
+```
+Next, we create CDS only and UTR only regions from those exons with both UTRs and CDS
+```bash
+bedtools intersect -a sorted.ref3.0.CDS.sc.bed -b sort.ref3.0.exonwithbothUTRandCDS.bed -wa > sort.comp.CDS.bed
+bedtools intersect -a sorted.ref3.0.UTR.sc.bed -b sort.ref3.0.exonwithbothUTRandCDS.bed -wa > sort.comp.UTR.bed
+```
+Now, we use bedtools to calculate coverage across all captures for both regions
+```bash
+bedtools coverage -b filter.merged.bam -a sort.comp.CDS.bed -mean -sorted -g genome.file > AllCAP.mean.CDSwithUTR.cov
+bedtools coverage -b filter.merged.bam -a sort.comp.UTR.bed -mean -sorted -g genome.file > AllCAP.mean.UTRwithCDS.cov
+```
+Create a combined data file
+```bash
+cat <(echo -e "Chrom\tStart\tEnd\tCoverage\tClass" ) <( mawk '{print $0"\tCDS"}' AllCAP.mean.CDSwithUTR.cov ) <( mawk '{print $0"\tUTR"}' AllCAP.mean.UTRwithCDS.cov ) > UTRvsCDS.txt
+```
+### R code for test
+```R
+CvU <- read.table("./UTRvsCDS.txt", header = TRUE)
+CvU <-as.data.frame(CvU)
 
+UTR <- CvU[which(CvU$Class=="UTR"),]
+CDS <- CvU[which(CvU$Class=="CDS"),]
 
+t.test(CDS$Coverage,UTR$Coverage)
+```
 
