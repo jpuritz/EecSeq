@@ -1058,6 +1058,65 @@ CvU <-as.data.frame(CvU)
 UTR <- CvU[which(CvU$Class=="UTR"),]
 CDS <- CvU[which(CvU$Class=="CDS"),]
 
+UTR$Coverage <- UTR$Coverage/6
+CDS$Coverage <- CDS$Coverage/6
+
 t.test(CDS$Coverage,UTR$Coverage)
 ```
+Results:
+```R
+	Welch Two Sample t-test
 
+data:  CDS$Coverage and UTR$Coverage
+t = 40.063, df = 135580, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 5.822934 6.421991
+sample estimates:
+mean of x mean of y 
+ 17.70905  11.58659 
+```
+
+Now change to RNA directory
+
+`cd $Working_DIR/RNA`
+
+Repeat bedtools steps
+```bash
+bedtools subtract -a sorted.ref3.0.exon.bed -b sorted.ref3.0.CDS.bed -g genome.file -sorted > sorted.ref3.0.UTR.bed
+bedtools merge -i sorted.ref3.0.UTR.bed > sorted.ref3.0.UTR.sc.bed
+bedtools intersect -a sorted.ref3.0.exon.sc.bed -b sorted.ref3.0.UTR.sc.bed -wa > sort.ref3.0.exonwithUTR.sc.bed
+bedtools intersect -a sort.ref3.0.exonwithUTR.sc.bed -b sorted.ref3.0.CDS.sc.bed -wa > sort.ref3.0.exonwithbothUTRandCDS.bed
+bedtools intersect -a sorted.ref3.0.CDS.sc.bed -b sort.ref3.0.exonwithbothUTRandCDS.bed -wa > sort.comp.CDS.bed
+bedtools intersect -a sorted.ref3.0.UTR.sc.bed -b sort.ref3.0.exonwithbothUTRandCDS.bed -wa > sort.comp.UTR.bed
+
+bedtools coverage -b m4.q4.merged.bam -a sort.comp.UTR.bed -mean -sorted -g genome.file -split  > m4q4.mean.UTR.cov 
+bedtools coverage -b m4.q4.merged.bam -a sort.comp.CDS.bed -mean -sorted -g genome.file -split > m4q4.mean.CDSwithUTR.cov
+
+cat <(echo -e "Chrom\tStart\tEnd\tCoverage\tClass" ) <( mawk '{print $0"\tCDS"}' m4q4.mean.CDSwithUTR.cov ) <( mawk '{print $0"\tUTR"}' m4q4.mean.UTR.cov ) > UTRvsCDSRNA.txt
+
+```
+R Code
+```R
+CvUR <- read.table("./UTRvsCDSRNA.txt", header = TRUE)
+CvUR <-as.data.frame(CvUR)
+
+UTRR <- CvUR[which(CvUR$Class=="UTR"),]
+CDSR <- CvUR[which(CvUR$Class=="CDS"),]
+
+
+t.test(CDSR$Coverage,UTRR$Coverage)
+```
+Result:
+```
+	Welch Two Sample t-test
+
+data:  CDSR$Coverage and UTRR$Coverage
+t = 22.677, df = 129300, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 4.931675 5.864832
+sample estimates:
+mean of x mean of y 
+13.653255  8.255002 
+```
