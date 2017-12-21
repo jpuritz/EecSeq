@@ -272,7 +272,7 @@ samtools merge -@64 filter.merged.bam ECI_1.F.bam ECI_2.F.bam ECI_3.F.bam ECI_4.
 ```
 Get total coverage counts per exon
 ```bash
-bedtools coverage -b filter.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -split -counts > cov.counts.filtered.merged.exon.stats
+bedtools coverage -b filter.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -counts > cov.counts.filtered.merged.exon.stats
 ```
 Change to RNA directory
 ```bash
@@ -750,6 +750,35 @@ ECI_3	48.8%	6.7%	44.5%		37.9%	3.6%	58.6%		42.3%	4.3%	53.4%		34.3%	3.0%	62.7%
 ECI_12	51.8%	6.6%	41.6%		40.7%	3.6%	55.7%		45.3%	4.4%	50.3%		36.9%	3.1%	60.0%
 ```
 
+## Calculating Statistics for coverage over exons
+
+Get total coverage counts per 35X RNA exon "targets" and all exons for 
+
+```bash
+bedtools coverage -b filter.merged.bam -a m4q4.EiRc35.bed -sorted -g genome.file -mean > cov.counts.mean.filtered.merged.EiR.stats
+bedtools coverage -b filter.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -mean > cov.counts.mean.filtered.merged.exon.stats
+```
+Make table of middle 80% of exons sizes
+```bash
+cat <(echo -e "Chrom\tStart\tEnd\tDNA_Coverage") cov.counts.mean.filtered.merged.EiR.stats | mawk '!/NC_007175.2/' | mawk '$3 -$2 >59 || $0 ~/Chrom/'|mawk '$3 -$2 < 517|| $0 ~/Chrom/' > Eic35.cov.stats
+cat <(echo -e "Chrom\tStart\tEnd\tDNA_Coverage") cov.counts.mean.filtered.merged.exon.stats | mawk '!/NC_007175.2/' | mawk '$3 -$2 >59 || $0 ~/Chrom/'|mawk '$3 -$2 < 517|| $0 ~/Chrom/' > AllExon.cov.stats
+```
+### R code for stats
+```R
+Eic35cov <- read.table("Eic35.cov.stats", header = TRUE)
+Eic35cov$DNA_Coverage <- Eic35cov$DNA_Coverage/6
+median(Eic35cov$DNA_Coverage)
+mean(Eic35cov$DNA_Coverage)
+sd(Eic35cov$DNA_Coverage, na.rm=TRUE) /  sqrt(length(Eic35cov$DNA_Coverage[!is.na(Eic35cov$DNA_Coverage)]))
+
+
+AllExcov <- read.table("AllExon.cov.stats", header = TRUE)
+AllExcov$DNA_Coverage <- AllExcov$DNA_Coverage/6
+median(AllExcov$DNA_Coverage)
+mean(AllExcov$DNA_Coverage)
+sd(AllExcov$DNA_Coverage, na.rm=TRUE) /  sqrt(length(AllExcov$DNA_Coverage[!is.na(AllExcov$DNA_Coverage)]))
+```
+
 ## Generating data for Figure 5
 
 First, we need to break up exons into size classes.
@@ -768,11 +797,11 @@ bedtools makewindows -b exon_bin240to420.bed -w 28 -i srcwinnum| mawk '$1 !~ /NC
 bedtools makewindows -b exon_bin420to540.bed -w 30 -i srcwinnum| mawk '$1 !~ /NC_007175.2/' > exon_bin420to540b30.bed 
 ```
 
-The next step is to use bedtools to calculate coverage across these descrete windows.
+The next step is to use bedtools to calculate mean per bp coverage across these descrete windows.
 ```bash
-cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin60to180b10.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin60to180b10.cov &
-cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin180to240b15.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin180to240b15.cov &
-cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin240to420b28.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin240to420b28.cov &
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin60to180b10.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin60to180b10.cov 
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin180to240b15.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin180to240b15.cov 
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin240to420b28.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin240to420b28.cov 
 cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a exon_bin420to540b30.bed -mean -sorted -g genome.file) > Allcap.mean.exon_bin420to540b30.cov 
 ```
 
@@ -795,7 +824,6 @@ library(grid)
 library(plyr)
 library(dplyr)
 library(scales)
-#library(tidyquant)
 library(zoo)
 
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
@@ -838,7 +866,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 Exon60to180 <- read.table("Allcap.mean.exon_bin60to180b10.cov", header = TRUE)
 
 Exon60to180 <- as.data.frame(Exon60to180)
-#Exon60to180$Depth <- Exon60to180$Depth/6
+Exon60to180$Depth <- Exon60to180$Depth/6
 
 
 f <- function(x) {
@@ -848,72 +876,230 @@ f <- function(x) {
 
 
 plot1<- ggplot(Exon60to180, aes(x=Bin, y=Depth)) + 
-  stat_summary(fun.y="median", geom="bar", fill=cbPalette[1], alpha=0.9) +
-  stat_summary(fun.data = f, geom = "errorbar") +
+  #stat_summary(fun.y="median", geom="bar", fill=cbPalette[1], alpha=0.9) +
+  geom_boxplot(fill=cbPalette[1], alpha=0.9,outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
   theme_classic() +
-  ylab("Median Coverage") +
-  xlab("10 bp Windows Across Exons 60bp - 180bp in Length")+
-  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
-  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+  ylab("Mean per bp coverage per capture") +
+  xlab("10 bp Windows Across Exons 60bp - 180bp in Length (n = 194,358) ")+
+  scale_y_continuous(breaks = c(10,20,30,40,50))+
+  coord_cartesian(ylim = c(0,55), expand = c(0.05,0.01)) +
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
 
 
 Exon180to240 <- read.table("Allcap.mean.exon_bin180to240b15.cov", header = TRUE)
 
 Exon180to240 <- as.data.frame(Exon180to240)
-#Exon180to240$Depth <- Exon180to240$Depth/6
+Exon180to240$Depth <- Exon180to240$Depth/6
 
 
 plot2<- ggplot(Exon180to240, aes(x=Bin, y=Depth)) + 
-  stat_summary(fun.y="median", geom="bar", fill=cbPalette[2], alpha=0.9) +
-  stat_summary(fun.data = f, geom = "errorbar") +
-  #geom_abline(intercept = mean(Exon180to240$Depth), slope =0) +
-  #scale_y_continuous(expand = c(0,0))+
+  geom_boxplot(fill=cbPalette[2], alpha=0.9,outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
   theme_classic() +
-  ylab("Median Coverage") +
-  xlab("15 bp Windows Across Exons 180bp - 240bp in Length")+
-  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
-  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+  ylab("Mean per bp coverage per capture") +
+  xlab("15 bp Windows Across Exons 180bp - 240bp in Length (n = 37,173)")+
+  scale_y_continuous(breaks = c(10,20,30,40,50))+
+  coord_cartesian(ylim = c(0,55), expand = c(0.05,0.01)) +
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
 
 Exon240to420 <- read.table("Allcap.mean.exon_bin240to420b28.cov", header = TRUE)
 
 Exon240to420 <- as.data.frame(Exon240to420)
-#Exon240to420$Depth <- Exon240to420$Depth/6
+Exon240to420$Depth <- Exon240to420$Depth/6
 
 
 plot3<- ggplot(Exon240to420, aes(x=Bin, y=Depth)) + 
-  stat_summary(fun.y="median", geom="bar", fill=cbPalette[4], alpha=0.9) +
-  stat_summary(fun.data = f, geom = "errorbar") +
-  #geom_abline(intercept = mean(Exon240to420$Depth), slope =0) +
-  #scale_y_continuous(expand = c(0,0))+
+  geom_boxplot(fill=cbPalette[4], alpha=0.9,outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
   theme_classic() +
-  ylab("Median Coverage") +
-  xlab("28 bp Windows Across Exons 240bp - 420bp in Length")+
-  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
-  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+  ylab("Mean per bp coverage per capture") +
+  xlab("28 bp Windows Across Exons 240bp - 420bp in Length (n = 31,094)")+
+  scale_y_continuous(breaks = c(10,20,30,40,50))+
+  coord_cartesian(ylim = c(0,55), expand = c(0.05,0.01)) +
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
+
 
 Exon420to540 <- read.table("Allcap.mean.exon_bin420to540b30.cov", header = TRUE)
 
 Exon420to540 <- as.data.frame(Exon420to540)
-#Exon420to540$Depth <- Exon420to540$Depth/6
+Exon420to540$Depth <- (Exon420to540$Depth/6)
 
 
 plot4<- ggplot(Exon420to540, aes(x=Bin, y=Depth)) + 
-  stat_summary(fun.y="median", geom="bar", fill=cbPalette[5], alpha=0.9) +
-  stat_summary(fun.data = f, geom = "errorbar") +
-  #geom_abline(intercept = mean(Exon420to540$Depth), slope =0,linetype=dash) +
-  #scale_y_continuous(expand = c(0,0))+
+  geom_boxplot(fill=cbPalette[5], alpha=0.9, outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
+  scale_y_continuous(breaks = c(10,20,30,40,50))+
+  coord_cartesian(ylim = c(0,55), expand = c(0.05,0.01)) +
   theme_classic() +
-  ylab("Median Coverage") +
-  xlab("30 bp Windows Across Exons 420bp - 540bp in Length")+
-  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) +
-  coord_cartesian(ylim = c(0,45), expand = c(0,0))
+  ylab("Mean per bp coverage per capture") +
+  xlab("30 bp Windows Across Exons 420bp - 540bp in Length (n = 7,600)")+
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
+  
+  
+plot4
 
 
 png(filename="Figure5.png", type="cairo",units="px", width=5600, 
-    height=3000, res=600, bg="transparent")
+    height=3000, res=500, bg="transparent")
 multiplot(plot1, plot3,plot2,plot4, cols=2)
 dev.off()
 ```
+
+## Code for Supplemental Figure 3
+Similar code as above with the exception of starting with the 35X RNA coverage exon targets
+```bash
+mawk '$3 - $2 > 59' m4q4.EiRc35.bed | mawk '$3 - $2 < 181' > EiRc35_bin60to180.bed
+mawk '$3 - $2 > 180' m4q4.EiRc35.bed | mawk '$3 - $2 < 241' > EiRc35_bin180to240.bed
+mawk '$3 - $2 > 240' m4q4.EiRc35.bed | mawk '$3 - $2 < 421' > EiRc35_bin240to420.bed
+mawk '$3 - $2 > 420' m4q4.EiRc35.bed | mawk '$3 - $2 < 541' > EiRc35_bin420to540.bed
+
+bedtools makewindows -b EiRc35_bin60to180.bed -w 10 -i srcwinnum > EiRc35_bin60to180b10.bed &
+bedtools makewindows -b EiRc35_bin180to240.bed -w 15 -i srcwinnum > EiRc35_bin180to240b15.bed &
+bedtools makewindows -b EiRc35_bin240to420.bed -w 28 -i srcwinnum > EiRc35_bin240to420b28.bed &
+bedtools makewindows -b EiRc35_bin420to540.bed -w 30 -i srcwinnum > EiRc35_bin420to540b30.bed 
+
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a EiRc35_bin60to180b10.bed -mean -sorted -g genome.file) > Allcap.mean.EiRc35_bin60to180b10.cov &
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a EiRc35_bin180to240b15.bed -mean -sorted -g genome.file) > Allcap.mean.EiRc35_bin180to240b15.cov &
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a EiRc35_bin240to420b28.bed -mean -sorted -g genome.file) > Allcap.mean.EiRc35_bin240to420b28.cov &
+cat <(echo -e "Chrom\tStart\tEnd\tBin\tDepth") <(bedtools coverage -b filter.merged.bam -a EiRc35_bin420to540b30.bed -mean -sorted -g genome.file) > Allcap.mean.EiRc35_bin420to540b30.cov 
+
+ls Allcap.mean.EiRc35_bin*b*.cov | parallel bash sed.sh {}
+```
+## R code for Supplemental Figure 3
+```R
+library(ggplot2)
+library(grid)
+library(plyr)
+library(dplyr)
+library(scales)
+library(zoo)
+
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+
+Exon60to180 <- read.table("Allcap.mean.EiRc35_bin60to180b10.cov", header = TRUE)
+
+Exon60to180 <- as.data.frame(Exon60to180)
+Exon60to180$Depth <- Exon60to180$Depth/6
+
+
+f <- function(x) {
+  ans <- boxplot.stats(x)
+  data.frame(ymin = ans$conf[1], ymax = ans$conf[2])
+}
+
+
+plot1<- ggplot(Exon60to180, aes(x=Bin, y=Depth)) + 
+  geom_boxplot(fill=cbPalette[1], alpha=0.9,outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
+  theme_classic() +
+  ylab("Mean per bp coverage per capture") +
+  xlab("10 bp Windows Across Exons 60bp - 180bp in Length (n = 31,504) ")+
+  scale_y_continuous(breaks = c(20,40,60,80,100,120,140,160))+
+  coord_cartesian(ylim = c(0,160), expand = c(0.05,0.01)) +
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
+
+
+Exon180to240 <- read.table("Allcap.mean.EiRc35_bin180to240b15.cov", header = TRUE)
+
+Exon180to240 <- as.data.frame(Exon180to240)
+Exon180to240$Depth <- Exon180to240$Depth/6
+
+
+plot2<- ggplot(Exon180to240, aes(x=Bin, y=Depth)) + 
+  geom_boxplot(fill=cbPalette[2], alpha=0.9,outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
+  theme_classic() +
+  ylab("Mean per bp coverage per capture") +
+  xlab("15 bp Windows Across Exons 180bp - 240bp in Length (n = 8,569)")+
+  scale_y_continuous(breaks = c(20,40,60,80,100,120,140,160))+
+  coord_cartesian(ylim = c(0,160), expand = c(0.05,0.01)) +
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
+
+Exon240to420 <- read.table("Allcap.mean.EiRc35_bin240to420b28.cov", header = TRUE)
+
+Exon240to420 <- as.data.frame(Exon240to420)
+Exon240to420$Depth <- Exon240to420$Depth/6
+
+
+plot3<- ggplot(Exon240to420, aes(x=Bin, y=Depth)) + 
+  geom_boxplot(fill=cbPalette[4], alpha=0.9,outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
+  theme_classic() +
+  ylab("Mean per bp coverage per capture") +
+  xlab("28 bp Windows Across Exons 240bp - 420bp in Length (n = 7,997)")+
+  scale_y_continuous(breaks = c(20,40,60,80,100,120,140,160))+
+  coord_cartesian(ylim = c(0,160), expand = c(0.05,0.01)) +
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
+
+
+Exon420to540 <- read.table("Allcap.mean.EiRc35_bin420to540b30.cov", header = TRUE)
+
+Exon420to540 <- as.data.frame(Exon420to540)
+Exon420to540$Depth <- (Exon420to540$Depth/6)
+
+
+plot4<- ggplot(Exon420to540, aes(x=Bin, y=Depth)) + 
+  geom_boxplot(fill=cbPalette[5], alpha=0.9, outlier.shape = NA)+
+  stat_summary(fun.y=mean, geom="point", shape=23, size=2, fill="black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar",size=0.25,width=0.5) +
+  scale_y_continuous(breaks = c(20,40,60,80,100,120,140,160))+
+  coord_cartesian(ylim = c(0,160), expand = c(0.05,0.01)) +
+  theme_classic() +
+  ylab("Mean per bp coverage per capture") +
+  xlab("30 bp Windows Across Exons 420bp - 540bp in Length (n = 2,406)")+
+  theme(axis.text.x=element_blank(),axis.ticks.x=element_blank()) 
+
+
+
+png(filename="SuppFigure3.png", type="cairo",units="px", width=5600, 
+    height=3000, res=500, bg="transparent")
+multiplot(plot1, plot3,plot2,plot4, cols=2)
+dev.off()
+```
+
 
 ## Code to generate data for Figure 6
 
