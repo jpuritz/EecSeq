@@ -1277,12 +1277,19 @@ mawk '$0 ~ /#/ || $0 ~ /TYPE\=snp/' decomp.raw.vcf > snp.raw.vcf
 Next, filter using VCFtools to generate stats
 
 Total SNPs: `vcftools --vcf snp.raw.vcf `
+
 Total SNPs with quality score higher than 20: `vcftools --vcf snp.raw.vcf --minQ 20`
+
 Total Exome SNPS: `vcftools --vcf snp.raw.vcf --bed sorted.ref3.0.exon.sc.bed --minQ 20`
+
 Exome SNPs with minimum mean 16X coverage: `vcftools --vcf snp.raw.vcf --minQ 20 --bed sorted.ref3.0.exon.sc.bed --min-meanDP 16`
+
 Exome SNPs with minimum mean 32X coverage: `vcftools --vcf snp.raw.vcf --minQ 20  --bed sorted.ref3.0.exon.sc.bed --min-meanDP 32`
+
 Exome SNPs with minimum mean 48X coverage: `vcftools --vcf snp.raw.vcf --minQ 20  --bed sorted.ref3.0.exon.sc.bed --min-meanDP 48`
+
 Exome SNPs with minimum mean 80X coverage: `vcftools --vcf snp.raw.vcf --minQ 20  --bed sorted.ref3.0.exon.sc.bed --min-meanDP 80`
+
 SNPs with minimum mean 80X coverage outside of exome: `vcftools --vcf snp.raw.vcf --minQ 20  --exclude-bed sorted.ref3.0.exon.sc.bed --min-meanDP 80`
 
 
