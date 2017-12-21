@@ -1096,7 +1096,7 @@ bedtools coverage -b m4.q4.merged.bam -a sort.comp.CDS.bed -mean -sorted -g geno
 cat <(echo -e "Chrom\tStart\tEnd\tCoverage\tClass" ) <( mawk '{print $0"\tCDS"}' m4q4.mean.CDSwithUTR.cov ) <( mawk '{print $0"\tUTR"}' m4q4.mean.UTR.cov ) > UTRvsCDSRNA.txt
 
 ```
-R Code
+### R Code
 ```R
 CvUR <- read.table("./UTRvsCDSRNA.txt", header = TRUE)
 CvUR <-as.data.frame(CvUR)
@@ -1119,4 +1119,144 @@ alternative hypothesis: true difference in means is not equal to 0
 sample estimates:
 mean of x mean of y 
 13.653255  8.255002 
+```
+
+## Generate data for Figure 7
+
+Change back to DNA directory
+
+`cd $WORKING_DIR/Genome`
+
+The first step is to generate depth per bp data for each capture pool.
+```bash
+ls *.F.bam | sed 's/.F.bam//g' | parallel "samtools depth -aa {}.F.bam > {}.genome.depth"
+```
+
+Next, we extract the region of interest.
+```bash
+mawk '$1 ~ /NC_035780.1/ && $2 > 32736205' ECI_1.genome.depth | mawk '$2 < 32866205' > ECI_1.graph.depth 
+mawk '$1 ~ /NC_035780.1/ && $2 > 32736205' ECI_2.genome.depth | mawk '$2 < 32866205' > ECI_2.graph.depth 
+mawk '$1 ~ /NC_035780.1/ && $2 > 32736205' ECI_4.genome.depth | mawk '$2 < 32866205' > ECI_4.graph.depth 
+mawk '$1 ~ /NC_035780.1/ && $2 > 32736205' ECI_3.genome.depth | mawk '$2 < 32866205' > ECI_3.graph.depth 
+mawk '$1 ~ /NC_035780.1/ && $2 > 32736205' ECI_7.genome.depth | mawk '$2 < 32866205' > ECI_7.graph.depth 
+mawk '$1 ~ /NC_035780.1/ && $2 > 32736205' ECI_12.genome.depth | mawk '$2 < 32866205' > ECI_12.graph.depth
+```
+
+Next, we add a column for the pool identifier and concatenate into single data table.
+```bash
+sed -i 's/$/\tEC_1/g' ECI_1.graph.depth &
+sed -i 's/$/\tEC_2/g' ECI_2.graph.depth &
+sed -i 's/$/\tEC_4/g' ECI_4.graph.depth &
+sed -i 's/$/\tEC_3/g' ECI_3.graph.depth &
+sed -i 's/$/\tEC_7/g' ECI_7.graph.depth &
+sed -i 's/$/\tEC_12/g' ECI_12.graph.depth & 
+
+echo -e "Contig\tbp\tDepth\tSample" > header
+cat header ECI_*.graph.depth > TotalCov.txt
+```
+
+For the graph, we all need the annotations for the gene regions, the exons, and CDS
+```bash
+mawk '$1 ~ /NC_035780.1/ && $4 > 32736205' ~/j.puritz_remote/new_genome/GFF/ref_C_virginica-3.0_top_level.gff3 | mawk '$5 < 32866205' | mawk '$3 == "exon"' | cut -f1,4,5,9 | uniq -w 30 | sed 's/ID=.*product=//g' | sed 's/;trans.*//g' | sed 's/%.*//g' > exons
+cat <(echo -e "Contig\tStart\tEnd\tTreatment") exons > exon.list
+
+mawk '$1 ~ /NC_035780.1/ && $4 > 32736205' ~/j.puritz_remote/new_genome/GFF/ref_C_virginica-3.0_top_level.gff3 | mawk '$5 < 32866205' | mawk '$3 == "mRNA"' | cut -f1,4,5,9 | uniq -w 30 | sed 's/ID=.*product=//g' | sed 's/;trans.*//g' | sed 's/%.*//g' > genes
+cat <(echo -e "Contig\tStart\tEnd\tTreatment") genes > genes.list
+
+
+mawk '$1 ~ /NC_035780.1/ && $4 > 32736205' ~/j.puritz_remote/new_genome/GFF/ref_C_virginica-3.0_top_level.gff3 | mawk '$5 < 32866205' | mawk '$3 == "CDS"' | cut -f1,4,5,9 | uniq -w 30 | sed 's/ID=.*product=//g' | sed 's/;trans.*//g' | sed 's/%.*//g' > CDS
+cat <(echo -e "Contig\tStart\tEnd\tTreatment") CDS > CDS.list
+```
+We also need to perform similar steps for the RNA data
+```bash
+cd $Working_DIR/RNA
+
+samtools view -@64 -q4 -h -F 0x100 -F 0x400 ../RNA1m3Aligned.sortedByCoord.out.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/' | samtools view -b > RNA1.bam
+samtools view -@64 -q4 -h -F 0x100 -F 0x400 ../RNA2m3Aligned.sortedByCoord.out.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/' | samtools view -b > RNA2.bam
+samtools view -@64 -q4 -h -F 0x100 -F 0x400 ../RNA3m3Aligned.sortedByCoord.out.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/' | samtools view -b > RNA3.bam
+samtools view -@64 -q4 -h -F 0x100 -F 0x400 ../RNA4m3Aligned.sortedByCoord.out.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/' | samtools view -b > RNA4.bam
+
+
+bedtools coverage -b RNA1.bam -a <(echo -e "NC_035780.1\t32740000\t32755000") -d -split -sorted -g genome.file | mawk 'BEGIN { FS = "\t" }{t = $2+$4 -1; print $1"\t"t"\t"$5}'> RNA1.exon.cov.stats
+bedtools coverage -b RNA2.bam -a <(echo -e "NC_035780.1\t32740000\t32755000") -d -split -sorted -g genome.file | mawk 'BEGIN { FS = "\t" }{t = $2+$4 -1; print $1"\t"t"\t"$5}' > RNA2.exon.cov.stats
+bedtools coverage -b RNA3.bam -a <(echo -e "NC_035780.1\t32740000\t32755000") -d -split -sorted -g genome.file | mawk 'BEGIN { FS = "\t" }{t = $2+$4 -1; print $1"\t"t"\t"$5}' > RNA3.exon.cov.stats
+bedtools coverage -b  RNA4.bam -a <(echo -e "NC_035780.1\t32740000\t32755000") -d -split -sorted -g genome.file | mawk 'BEGIN { FS = "\t" }{t = $2+$4 -1; print $1"\t"t"\t"$5}'> RNA4.exon.cov.stats
+
+sed -i 's/$/\tRNA_1/g' RNA1.exon.cov.stats 
+sed -i 's/$/\tRNA_2/g' RNA2.exon.cov.stats 
+sed -i 's/$/\tRNA_3/g' RNA3.exon.cov.stats 
+sed -i 's/$/\tRNA_4/g' RNA4.exon.cov.stats 
+
+echo -e "Contig\tbp\tDepth" > header
+
+cat header *.exon.cov.stats > TotalRNACov1.txt
+cd $Working_DIR/DNA
+ln -s $Working_DIR/RNA/TotalRNACov1.txt
+```
+
+## R code for Figure 7
+```R
+library(ggplot2)
+library(grid)
+library(plyr)
+library(dplyr)
+library(scales)
+library(zoo)
+
+cbPalette <- c("#D55E00", "#009E73", "#56B4E9" ,"#0072B2" ,"#E69F00" ,"#F0E442" ,"#999999" ,"#CC79A7","#7570B3")
+DepC <- read.table("TotalCov.txt", header = TRUE)
+DepR <- read.table("TotalRNACov1.txt", header = TRUE)
+
+DepC <- as.data.frame(DepC)
+DepC$Sample <- factor(DepC$Sample,levels=c("EC_2","EC_4","EC_7","EC_1","EC_3","EC_12"))
+DepR <- as.data.frame(DepR)
+DepR$Sample <- factor(DepR$Sample,levels=c("RNA_1","RNA_2","RNA_3","RNA_4"))
+
+exons <- read.table("exon.list", header = TRUE, sep = "\t")
+exons <- as.data.frame(exons)
+
+genes <- read.table("genes.list", header = TRUE, sep = "\t")
+genes <- as.data.frame(genes)
+
+cds <- read.table("cds.list", header = TRUE, sep = "\t")
+cds <- as.data.frame(cds)
+
+subDepC <-subset(DepC, bp <32755000 & bp > 32739000)
+subDepR <-subset(DepR, bp <32755000 & bp > 32739000)
+subexons <-subset(exons, End <32755205 & End > 32740205)
+subgenes <-subset(genes, End <32800757 & Start < 32754201)
+subcds <-subset(cds, End <32800757 & Start < 32755000)
+subDepR$Depth <- subDepR$Depth / -1
+submean.cov <- ddply(subDepC, .(Contig,bp), summarize,  Depth=mean(Depth))
+submeanR.cov <- ddply(subDepR, .(Contig,bp), summarize,  Depth=mean(Depth))
+subgenes$End[4] <- 32755000
+
+
+pie(rep(1, length(cbPalette)), labels = sprintf("%d (%s)", seq_along(cbPalette), 
+                                                cbPalette), col = cbPalette)
+redcol <-"#940000"
+
+cbPalette <- c("#D55E00", "#009E73", "#56B4E9" ,"#0072B2" ,"#E69F00" ,"#F0E442" ,"#999999" ,"#CC79A7","#7570B3")
+cbPalettedd <- c( "#009E73","#D55E00", "#E69F00")
+
+
+dd <- ggplot(subDepC, aes(x= bp, y=Depth)) +
+  geom_area(aes(group=Sample),position = "identity",color=alpha("grey30",0.25),fill=cbPalette[4], alpha=0.1, linetype="dotted")+  
+  geom_line(data=submean.cov,aes(y=rollmean(Depth, 100, na.pad=TRUE)),colour=cbPalette[4], size =1.0, alpha=0.9)  +
+  geom_line(data=submeanR.cov,aes(y=rollmean(Depth, 100, na.pad=TRUE)),colour=redcol, size =1.0, alpha=0.9)  +
+  geom_area(data=subDepR, aes(group=Sample),position = "identity",color=alpha("grey30",0.25),fill=redcol, alpha=0.1, linetype="dotted")+
+  scale_color_manual(values=cbPalettedd) +
+  geom_segment(data=subgenes, aes(x = Start, y = 715, xend = End, yend = 715), size = 6,color=cbPalette[9], alpha=1)+
+  geom_segment(data=subexons,aes(x = Start, y = 715, xend = End, yend = 715, color=Treatment),size = 4, alpha=1) +
+  geom_segment(data=subcds,aes(x = Start, y = 715, xend = End, yend = 715),size = 1, color="grey90", alpha=1) +
+  theme_bw()+
+  coord_cartesian(xlim = c(32740000,32755000))+
+  xlim(32740000,32755000) +
+  scale_y_continuous(limits=c(-415,735),labels=c("250","0","500"), breaks=c(-250,0,500),expand=c(0.01,0)) +
+  theme(legend.position="none")
+
+png(filename="Figure7.png", type="cairo",units="px", width=5600, 
+    height=3000, res=600, bg="transparent")
+dd
+dev.off()
 ```
