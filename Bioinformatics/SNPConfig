@@ -1,0 +1,24 @@
+Number of Processors
+72
+Maximum Memory
+0
+Trimming
+no
+Assembly?
+no
+Type_of_Assembly
+
+Clustering_Similarity%
+
+Mapping_Reads?
+no
+Mapping_Match_Value
+1
+Mapping_MisMatch_Value
+4
+Mapping_GapOpen_Penalty
+6
+Calling_SNPs?
+yes
+Email
+jpuritz@gmail.com
