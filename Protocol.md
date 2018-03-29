@@ -912,6 +912,12 @@ Review quantifications for probes.  Ideally, there should be about 500 ng of pro
 
 #### This step may be possbile to skip and proceed directly to the 1.5X SPRI Cleanup.
 
+### It is important to check for the digested adapters.  See trace below with adapter peaks:
+
+![alt text](/ProbesandDigested.png)
+
+#### If your trace looks like this, perform the additional 1.5X SPRI Cleanup below
+
 |Component|Volume|
 |---------|------|
 |MBN reaction| 45 μl|
@@ -1071,6 +1077,14 @@ This is a safe stopping point. If you are stopping, store your sample at ‐15°
 * On the assay screen, select the sample volume and units
 * Insert a sample tube into the sample chamber, close the lid, then press Read tube. When the reading is complete (~3 seconds), remove the sample tube.
 * Repeat step last step until all samples have been read
+
+## Visualize Probes
+
+* Run probes on BioAnalyzer/Tape Station/Fragment analyzer 
+
+They should look like this:
+
+![alt text](/FinalProbes.png)
 
 ---
 
