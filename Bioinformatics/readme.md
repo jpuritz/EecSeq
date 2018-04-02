@@ -272,7 +272,7 @@ samtools merge -@64 filter.merged.bam ECI_1.F.bam ECI_2.F.bam ECI_3.F.bam ECI_4.
 ```
 Get total coverage counts per exon
 ```bash
-bedtools coverage -b filter.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -counts > cov.counts.filtered.merged.exon.stats
+bedtools coverage -b filter.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -mean > cov.mean.filtered.merged.exon.stats
 ```
 Change to RNA directory
 ```bash
@@ -280,29 +280,29 @@ cd $WORKING_DIR/RNA
 ```
 Calculate total RNA coverage per exon
 ```bash
-bedtools coverage -b m4.q4.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -counts -split > cov.m4q4.EiR.stats
+bedtools coverage -b m4.q4.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g genome.file -mean -split > cov.mean.m4q4.EiR.stats
 ```
 Paste RNA and DNA data together and remove mtDNA data
 ```bash
-paste cov.m4q4.EiR.stats <(cut -f4 $WORKING_DIR/DNA/cov.counts.filtered.merged.exon.stats) | mawk '!/NC_007175.2/' > RnD.cov.stats
+paste cov.mean.m4q4.EiR.stats <(cut -f4 /home/jpuritz/EecSeq/EecSeq2/cov.mean.filtered.merged.exon.stats) | mawk '!/NC_007175.2/' > RnD.cov.mean.stats
 ```
 Calculate lower 10th percentile of exon sizes
 ```bash
-mawk '{print $3 -$2}' RnD.cov.stats |sort -g | perl -e '$d=.1;@l=<>;print $l[int($d*@l)]'
+mawk '{print $3 -$2}' RnD.cov.mean.stats |sort -g | perl -e '$d=.1;@l=<>;print $l[int($d*@l)]'
 ```
 Resut: `59`
 
 Calculate upper 10th percentile of exon sizes
 ```bash
-mawk '{print $3 -$2}' RnD.cov.stats |sort -g | perl -e '$d=.9;@l=<>;print $l[int($d*@l)]'
+mawk '{print $3 -$2}' RnD.cov.mean.stats |sort -g | perl -e '$d=.9;@l=<>;print $l[int($d*@l)]'
 ```
 Result: `517`
 
 Mark exons into size classes based on size distribution and create data table
 ```bash
-mawk '{if ( $3 -$2 > 517 ) print $0 "\tUpper"; else if ( $3 - $2 < 59 ) print $0 "\tLower"; else if ( $3 - $2 > 58 && $3 - $2 < 518) print $0 "\tMiddle" }' RnD.cov.stats > rnd.cov.stats.class
+mawk '{if ( $3 -$2 > 517 ) print $0 "\tUpper"; else if ( $3 - $2 < 59 ) print $0 "\tLower"; else if ( $3 - $2 > 58 && $3 - $2 < 518) print $0 "\tMiddle" }' RnD.cov.mean.stats > rnd.mean.cov.stats.class
 echo -e "Chrom\tStart\tEnd\tRNA_Coverage\tDNA_Coverage\tExon_Size_Class" > header
-cat header rnd.cov.stats.class > ExonCoverage.txt
+cat header rnd.cov.stats.class > ExonMeanCoverage.txt
 ```
 
 ## R code for Figure 3
@@ -317,40 +317,47 @@ library(dplyr)
 library(scales)
 library(zoo)
 
-TotalExon <- read.table("./ExonCoverage.txt", header = TRUE)
+TotalExon <- read.table("./ExonMeanCoverage.txt", header = TRUE)
 TotalExon <-as.data.frame(TotalExon)
 
 TotalExon$Exon_Size_Class <-factor(TotalExon$Exon_Size_Class, levels=c("Lower","Middle","Upper"))
 
 TotalExon$Exon_Size_Class <- revalue(TotalExon$Exon_Size_Class, c("Lower"="Lower 10%", "Upper"="Upper 10%", "Middle"="Middle 80%"))
 
-TX <- TotalExon
-TX$RNA_Coverage <- log(TX$RNA_Coverage +1)
-TX$DNA_Coverage <- log(TX$DNA_Coverage + 1)
-
-
-TotalExon$density <- interp.surface(kde2d(TX$RNA_Coverage, TX$DNA_Coverage), TX[,c("RNA_Coverage", "DNA_Coverage")])
+get_density <- function(x, y, n = 100) {
+  dens <- MASS::kde2d(x = x, y = y, n = n)
+  ix <- findInterval(x, dens$x)
+  iy <- findInterval(y, dens$y)
+  ii <- cbind(ix, iy)
+  return(dens$z[ii])
+}
+TotalExon$density <- get_density(TX$RNA_Coverage, TX$DNA_Coverage)
 
 cbPalette <- c("#009E73","#D55E00","#56B4E9", "#0072B2","#E69F00", "#F0E442" , "#999999","#CC79A7")
 t <- cbPalette[1]
 cbPalette[1] <- cbPalette[2]
 cbPalette[2] <- t
 
-b <- ggplot(TotalExon, aes(x=RNA_Coverage+1,y=DNA_Coverage+1,alpha = 1/(density)),fill=Exon_Size_Class,color=Exon_Size_Class) + 
-  geom_abline(intercept =0, slope =1) +
+TotalExon$DNA_Coverage <- TotalExon$DNA_Coverage/6
+TotalExon$RNA_Coverage <- TotalExon$RNA_Coverage/4
+
+
+b <- bb<- ggplot(TotalExon, aes(x=RNA_Coverage+1,y=DNA_Coverage+1,alpha = 1/density),fill=Exon_Size_Class,color=Exon_Size_Class) + 
   geom_point(aes(color=TotalExon$Exon_Size_Class,fill=TotalExon$Exon_Size_Class,shape=TotalExon$Exon_Size_Class)) +
-  scale_alpha_continuous(guide = "none",range = c(.3, .99)) + 
+  geom_smooth(method="auto", alpha = 0.5, size = 0, se=TRUE)+
+  stat_smooth(geom="line", alpha=0.75, size=0.5, linetype="dashed") +
+  scale_alpha_continuous(guide = "none",range = c(.2, .95)) + 
   scale_shape_manual(values=c(15,16,17), name="Exon Size Percentile") +
   scale_fill_manual(values=cbPalette , name="Exon Size Percentile")+
   scale_color_manual(values=cbPalette, name="Exon Size Percentile") +
-  scale_x_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),
-                labels = c("0","0","10","100","1,000","10,000","100,000"))+
-  scale_y_log10(limits=c(1,150000),expand=c(0.02,0), breaks = c(0,1,10,100,1000,10000,100000),
-                labels = c("0","0","10","100","1,000","10,000","100,000"))+
-  xlab("Total Number of RNA Reads per Exon")+
-  ylab("Total Number of DNA Reads per Exon") +
+  scale_x_log10(limits=c(1,1300),expand=c(0.02,0), breaks = c(0,1,11,101,1001),
+                labels = c("0","0","10","100","1,000"))+
+  scale_y_log10(limits=c(1,1800),expand=c(0.02,0), breaks = c(0,1,11,101,1001),
+                labels = c("0","0","10","100","1,000"))+
+  xlab("Mean RNA Reads per Exon Base Pair")+
+  ylab("Mean DNA Reads per Exon Base Pair") +
   theme_bw() +
-  theme(legend.position = c(0.85,0.25)) 
+  theme(legend.position = c(0.9,0.15))  
 
 png(filename="Figure3.png", type="cairo",units="px", width=5600, 
     height=3000, res=600, bg="transparent")
