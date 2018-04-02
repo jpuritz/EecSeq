@@ -284,7 +284,7 @@ bedtools coverage -b m4.q4.merged.bam -a sorted.ref3.0.exon.sc.bed -sorted -g ge
 ```
 Paste RNA and DNA data together and remove mtDNA data
 ```bash
-paste cov.mean.m4q4.EiR.stats <(cut -f4 /home/jpuritz/EecSeq/EecSeq2/cov.mean.filtered.merged.exon.stats) | mawk '!/NC_007175.2/' > RnD.cov.mean.stats
+paste cov.mean.m4q4.EiR.stats <(cut -f4 $WORKING_DIR/DNA/cov.mean.filtered.merged.exon.stats) | mawk '!/NC_007175.2/' > RnD.cov.mean.stats
 ```
 Calculate lower 10th percentile of exon sizes
 ```bash
